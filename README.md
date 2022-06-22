@@ -25,7 +25,7 @@
 
 [Visual Studio 2022](https://visualstudio.microsoft.com/zh-hans/vs/)
 
-- 安装时，请勾选ASP.NET和Web开发组件，其他组件按需安装
+安装时，请勾选ASP.NET和Web开发组件，其他组件按需安装
 
 ## 项目介绍
 
@@ -37,8 +37,12 @@
 
 群基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
 
+[配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
+[配置描述](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/AppSetting.cs)
+
 ### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
 NFT身份组领取机器人，包含：NFT身份组领取规则配置、NFT身份组领取规则触发逻辑、NFT身份组领取规则解析
 
-
+[配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)
+[配置描述](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/AppSetting.cs)

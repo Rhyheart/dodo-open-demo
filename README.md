@@ -29,7 +29,7 @@
 
 ## 项目介绍
 
-本项目包含了DoDo开放平台机器人开发相关Demo，本Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
+本项目包含了DoDo开放平台机器人开发相关Demo，Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
 
 ## 项目列表
 

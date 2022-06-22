@@ -33,4 +33,6 @@
 
 ### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
-NFT身份组领取机器人，包含NFT身份组领取配置、NFT身份组领取逻辑
+NFT身份组领取机器人，包含：NFT身份组领取规则配置、NFT身份组领取规则触发逻辑、NFT身份组领取规则解析
+
+

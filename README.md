@@ -47,4 +47,4 @@
 
 ## 执行程序
 
-对于不具有开发能力的普通用户，本项目提供了编译完成的执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您的电脑需要先安装 [dotnet-runtime-6.0.6-win-x64.exe](https://github.com/Rhyheart/dodo-open-demo/releases/download/0.0.1/dotnet-runtime-6.0.6-win-x64.exe) 程序！
+对于不具有开发能力的普通用户，本项目提供了编译完成的Windows执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您的电脑需要先安装 [dotnet-runtime-6.0.6-win-x64.exe](https://github.com/Rhyheart/dodo-open-demo/releases/download/0.0.1/dotnet-runtime-6.0.6-win-x64.exe) 程序！

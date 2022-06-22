@@ -43,4 +43,4 @@
 
 NFT身份组领取机器人，包含：NFT身份组领取规则配置、NFT身份组领取规则触发逻辑、NFT身份组领取规则解析
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，`ChannelId`和`RoleId`请从`群基础信息获取机器人`中获取
+运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，`ChannelId`和`RoleId`请从`群基础信息获取机器人`中取得

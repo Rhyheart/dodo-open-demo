@@ -21,6 +21,12 @@
 
 </div>
 
+### 开发工具
+
+[Visual Studio 2022](https://visualstudio.microsoft.com/zh-hans/vs/)
+
+- 安装时，请勾选ASP.NET和Web开发组件，其他组件按需安装
+
 ## 项目介绍
 
 本项目包含了DoDo开放平台机器人开发相关Demo，本Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)

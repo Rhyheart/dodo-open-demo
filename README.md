@@ -27,10 +27,10 @@
 
 ## 项目结构
 
-### DoDo.Open.Info
+### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
 基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
 
-### DoDo.Open.NftRole
+### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
 NFT身份组领取机器人，包含NFT身份组领取配置、NFT身份组领取逻辑

@@ -24,7 +24,7 @@ namespace DoDo.Open.NftRole
         {
             Console.WriteLine($"\n{message}\n");
 
-            #region 初始化
+            #region NFT身份组领取初始化
 
             var settingFilePath = Environment.CurrentDirectory + "/appsettings.json";
             var setting = File.ReadAllText(settingFilePath);
@@ -136,6 +136,8 @@ namespace DoDo.Open.NftRole
         {
             var eventBody = input.Data.EventBody;
 
+            #region NFT身份组领取
+
             //校验当前反应的消息是否为配置的身份组领取消息
             if (_appSetting.MessageId == eventBody.ReactionTarget.Id)
             {
@@ -215,7 +217,9 @@ namespace DoDo.Open.NftRole
                         }
                     });
                 }
-            }
+            } 
+
+            #endregion
 
         }
     }

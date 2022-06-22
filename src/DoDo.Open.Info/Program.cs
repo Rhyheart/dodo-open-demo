@@ -20,6 +20,8 @@ var openApiService = new OpenApiService(new OpenApiOptions
     Token = appSetting.Token
 });
 
+#region 群基础信息获取
+
 try
 {
     Console.WriteLine("\n\n[ 取群信息 ]\n");
@@ -50,3 +52,4 @@ catch (Exception e)
     Console.WriteLine("发生异常：" + e.Message);
 }
 
+#endregion

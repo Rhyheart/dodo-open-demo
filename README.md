@@ -9,7 +9,7 @@
 
   # dodo-open-demo
 
-  _✨ 基于最新 C# .NET Standard 开发，支持Windows、MacOS、Linux、Docker，完美跨平台。 ✨_
+  _✨ 基于最新 C# .NET 6 开发，支持Windows、MacOS、Linux、Docker，完美跨平台。 ✨_
 
   <a href="https://github.com/Rhyheart/dodo-open-demo/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/Rhyheart/dodo-open-demo" alt="license">

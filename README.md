@@ -29,13 +29,13 @@
 
 ## 项目介绍
 
-本项目包含了DoDo开放平台机器人开发相关Demo，本Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
+本项目包含了DoDo开放平台机器人开发相关Demo，Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
 
 ## 项目列表
 
 ### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
-群基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
+群基础信息获取机器人，包含：[取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
 
 - [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
 

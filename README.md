@@ -20,3 +20,17 @@
   </a>
 
 </div>
+
+# 项目介绍
+
+本项目包含了DoDo开放平台机器人开发相关Demo，本Demo基于DoDo开放平台官方.Net SDK
+
+## 项目结构
+
+### DoDo.Open.Info
+
+基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
+
+### DoDo.Open.NftRole
+
+NFT身份组领取机器人，包含NFT身份组领取配置、NFT身份组领取逻辑

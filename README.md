@@ -35,12 +35,12 @@
 
 ### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
-群基础信息获取机器人，包含：[取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
+群基础信息获取机器人项目，包含：[取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)，`ClientId`和`Token`请从[DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)中获取
 
 ### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
-NFT身份组领取机器人，包含：NFT身份组领取规则配置、NFT身份组领取规则触发逻辑、NFT身份组领取规则解析
+NFT身份组领取机器人项目，包含：NFT身份组领取规则配置、NFT身份组领取规则触发逻辑、NFT身份组领取规则解析
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，`ChannelId`和`RoleId`请从`群基础信息获取机器人`中获取
+运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，`ChannelId`和`RoleId`请从[群基础信息获取机器人项目](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)`中获取

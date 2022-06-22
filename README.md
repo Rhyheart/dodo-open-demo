@@ -35,7 +35,7 @@
 
 ### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
-基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
+群基础信息获取机器人，包含：取群信息、取频道列表、取身份组列表
 
 ### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 

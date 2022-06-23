@@ -35,21 +35,21 @@
 
 #### [DoDo.Open.Test](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
-`测试机器人项目`，包含大量SDK自带的测试功能，项目启动后，将机器人拉进测试群，群内发送`菜单`指令即可查看所有测试功能！
+`测试机器人`项目，包含大量SDK自带的测试功能，项目启动后，将机器人拉进测试群，群内发送`菜单`指令即可查看所有测试功能！
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)，对于`ClientId`和`Token`，请访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，从中获取
 
 #### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
-`基础信息获取机器人项目`，包含：[取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
+`基础信息获取机器人`项目，包含：[取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
 
 #### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
-`NFT身份组领取机器人项目`，包含：NFT身份组领取规则配置逻辑、触发逻辑、解析逻辑
+`NFT身份组领取机器人`项目，包含：NFT身份组领取规则配置逻辑、触发逻辑、解析逻辑
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`基础信息获取机器人项目`，从中获取
+运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`基础信息获取机器人`项目，从中获取
 
 ## 执行程序
 

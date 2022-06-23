@@ -44,3 +44,7 @@
 `NFT身份组领取机器人项目`，包含：NFT身份组领取规则配置逻辑、触发逻辑、解析逻辑
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`群基础信息获取机器人项目`，从中获取
+
+## 执行程序
+
+对于不具有开发能力的普通用户，本项目提供了编译完成的Windows执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您需要先下载安装 [dotnet-runtime-6.0.6-win-x64.exe](https://github.com/Rhyheart/dodo-open-demo/releases/download/0.0.1/dotnet-runtime-6.0.6-win-x64.exe) 到您的电脑中！

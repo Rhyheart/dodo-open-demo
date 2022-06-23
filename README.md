@@ -35,7 +35,7 @@
 
 #### [DoDo.Open.Test](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
-`测试机器人项目`，包含大量SDK自带的测试功能，项目启动后，将机器人拉进测试群，群内发送`菜单`指令即可查看所有测试功能！
+`测试机器人项目`，包含 大量SDK自带的测试功能，项目启动后，将机器人拉进测试群，群内发送`菜单`指令即可查看所有测试功能！
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)，对于`ClientId`和`Token`，请访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，从中获取
 

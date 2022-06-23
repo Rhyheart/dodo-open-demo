@@ -49,7 +49,7 @@
 
 `NFT身份组领取机器人项目`，包含：NFT身份组领取规则配置逻辑、触发逻辑、解析逻辑
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`群基础信息获取机器人项目`，从中获取
+运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`基础信息获取机器人项目`，从中获取
 
 ## 执行程序
 

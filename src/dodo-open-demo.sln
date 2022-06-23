@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.Info", "DoDo.Open.Info\DoDo.Open.Info.csproj", "{E3D28EA3-AE3D-4D57-8DE7-D92BFE6B5D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Info", "DoDo.Open.Info\DoDo.Open.Info.csproj", "{E3D28EA3-AE3D-4D57-8DE7-D92BFE6B5D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.NftRole", "DoDo.Open.NftRole\DoDo.Open.NftRole.csproj", "{AA088D99-1B2E-4188-B132-0F326E5CAA52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.NftRole", "DoDo.Open.NftRole\DoDo.Open.NftRole.csproj", "{AA088D99-1B2E-4188-B132-0F326E5CAA52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.Test", "DoDo.Open.Test\DoDo.Open.Test.csproj", "{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AA088D99-1B2E-4188-B132-0F326E5CAA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA088D99-1B2E-4188-B132-0F326E5CAA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA088D99-1B2E-4188-B132-0F326E5CAA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

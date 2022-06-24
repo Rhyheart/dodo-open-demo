@@ -3,6 +3,11 @@
     public class AppSetting
     {
         /// <summary>
+        /// 接口地址
+        /// </summary>
+        public string BaseApi { get; set; }
+
+        /// <summary>
         /// 机器人唯一标识
         /// </summary>
         public string ClientId { get; set; }

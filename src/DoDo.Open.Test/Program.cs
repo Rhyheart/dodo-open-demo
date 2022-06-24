@@ -12,7 +12,7 @@ var appSetting = configuration.Get<AppSetting>();
 //接口服务
 var openApiService = new OpenApiService(new OpenApiOptions
 {
-    BaseApi = "https://botopen.imdodo.com",
+    BaseApi = appSetting.BaseApi,
     ClientId = appSetting.ClientId,
     Token = appSetting.Token
 });

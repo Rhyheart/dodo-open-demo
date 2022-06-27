@@ -21,15 +21,19 @@
 
 </div>
 
+## 项目介绍
+
+本项目包含了DoDo开放平台机器人开发相关Demo，Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
+
 ## 开发工具
 
 [Visual Studio 2022](https://visualstudio.microsoft.com/zh-hans/vs/)
 
 安装时，请勾选ASP.NET和Web开发组件，其他组件按需安装
 
-## 项目介绍
+## 执行程序
 
-本项目包含了DoDo开放平台机器人开发相关Demo，Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
+对于不具有开发能力的普通用户，本项目提供了编译完成的Windows执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您需要先下载安装 [dotnet-runtime-6.0.6-win-x64.exe](https://download.visualstudio.microsoft.com/download/pr/7989338b-8ae9-4a5d-8425-020148016812/c26361fde7f706279265a505b4d1d93a/dotnet-runtime-6.0.6-win-x64.exe) 到您的电脑中！
 
 ## 项目列表
 
@@ -88,7 +92,3 @@
 5、启动程序
 
 6、前往测试频道领取对应身份组
-
-## 执行程序
-
-对于不具有开发能力的普通用户，本项目提供了编译完成的Windows执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您需要先下载安装 [dotnet-runtime-6.0.6-win-x64.exe](https://download.visualstudio.microsoft.com/download/pr/7989338b-8ae9-4a5d-8425-020148016812/c26361fde7f706279265a505b4d1d93a/dotnet-runtime-6.0.6-win-x64.exe) 到您的电脑中！

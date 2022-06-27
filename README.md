@@ -41,7 +41,7 @@
 
 #### 使用步骤
 
-1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)创建机器人，获取机器人的`ClientId`和`Token`！
+1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html) 创建机器人，获取机器人的`ClientId`和`Token`！
 
 2、将机器人拉入测试群
 

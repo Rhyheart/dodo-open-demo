@@ -45,6 +45,8 @@
 
 #### 使用步骤
 
+[配套视频](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
+
 1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，按照教程创建机器人，获取机器人的`ClientId`和`Token`
 
 2、将机器人拉入测试群
@@ -63,6 +65,10 @@
 
 该项目用于获取DoDo群相关基础信息，包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html) 等功能
 
+#### 使用步骤
+
+[配套视频](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
+
 1、创建机器人
 
 2、将机器人拉入测试群
@@ -80,6 +86,10 @@
 #### 项目介绍
 
 该项目用于实现NFT身份组功能，用户通过对NFT身份组领取消息添加对应表情反应，从而获取对应身份组
+
+#### 使用步骤
+
+[配套视频](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
 
 1、创建机器人
 

@@ -37,11 +37,11 @@
 
 #### 项目介绍
 
-该项目包含大量SDK自带的测试功能，用于测试DoDo开放平台相关接口功能！
+该项目用于测试DoDo开放平台相关接口功能，包含大量SDK自带的测试用例
 
 #### 使用步骤
 
-1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html) 创建机器人，获取机器人的`ClientId`和`Token`！
+1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html) 创建机器人，获取机器人的`ClientId`和`Token`
 
 2、将机器人拉入测试群
 
@@ -57,7 +57,7 @@
 
 #### 项目介绍
 
-该项目包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html) 等功能，用于获取DoDo群相关基础信息
+该项目用于获取DoDo群相关基础信息，包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html) 等功能
 
 1、创建机器人
 
@@ -75,7 +75,7 @@
 
 #### 项目介绍
 
-该项目包含NFT身份组领取规则相关配置逻辑、触发逻辑、解析逻辑
+该项目用于实现NFT身份组功能，用户通过对NFT身份组领取消息添加对应表情反应，从而获取对应身份组
 
 1、创建机器人
 

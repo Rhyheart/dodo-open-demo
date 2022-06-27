@@ -33,21 +33,31 @@
 
 ## 项目列表
 
-#### [DoDo.Open.Test](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
+### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
-`测试机器人项目`，包含 大量SDK自带的测试功能，项目启动后，将机器人拉进测试群，群内发送`菜单`指令即可查看所有测试功能！
+#### 项目介绍
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)，对于`ClientId`和`Token`，请访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，从中获取
+该项目包含大量SDK自带的测试功能，用于测试DoDo开放平台相关接口功能！
 
-#### [DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
+#### 使用步骤
 
-`基础信息机器人项目`，包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html)
+1、下载解压执行程序
+
+2、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)，对于`ClientId`和`Token`，请访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，从中获取
+
+3、启动程序，将机器人拉进测试群
+
+4、群内发送`菜单`指令即可查看所有测试功能
+
+### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
+
+该项目包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html) 等功能，用于获取DoDo群相关基础信息
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
 
-#### [DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
+### [NFT身份组机器人（DoDo.Open.NftRole）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
-`NFT身份组机器人项目`，包含 NFT身份组领取规则配置逻辑、触发逻辑、解析逻辑
+该项目包含NFT身份组领取规则相关配置逻辑、触发逻辑、解析逻辑
 
 运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`基础信息机器人项目`，从中获取
 

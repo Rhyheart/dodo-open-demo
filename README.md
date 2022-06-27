@@ -57,7 +57,7 @@
 
 6、测试群内发送`菜单`指令即可查看所有测试功能
 
-#### 配套视频
+#### 视频教程
 
 [【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
 
@@ -81,7 +81,7 @@
 
 4、通过程序控制台可获取到DoDo群相关基础信息
 
-#### 配套视频
+#### 视频教程
 
 [【DoDo教程】基础信息机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
 
@@ -105,6 +105,6 @@
 
 6、前往测试频道领取对应身份组
 
-#### 配套视频
+#### 视频教程
 
 [【DoDo教程】NFT身份组机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)

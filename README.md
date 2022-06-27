@@ -41,25 +41,53 @@
 
 #### 使用步骤
 
-1、下载解压执行程序
+1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)创建机器人，获取机器人的`ClientId`和`Token`！
 
-2、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)，对于`ClientId`和`Token`，请访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，从中获取
+2、将机器人拉入测试群
 
-3、启动程序，将机器人拉进测试群
+3、下载解压执行程序
 
-4、群内发送`菜单`指令即可查看所有测试功能
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`菜单`指令即可查看所有测试功能
 
 ### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
+#### 项目介绍
+
 该项目包含 [取群信息](https://open.imdodo.com/api/island/info.html)、[取频道列表](https://open.imdodo.com/api/channel/list.html)、[取身份组列表](https://open.imdodo.com/api/role/list.html) 等功能，用于获取DoDo群相关基础信息
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+2、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Info/appsettings.json)
+
+3、启动程序
+
+4、通过程序控制台可获取到DoDo群相关基础信息
 
 ### [NFT身份组机器人（DoDo.Open.NftRole）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
+#### 项目介绍
+
 该项目包含NFT身份组领取规则相关配置逻辑、触发逻辑、解析逻辑
 
-运行项目前请先维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请运行`基础信息机器人项目`，从中获取
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请从`基础信息机器人`中获取
+
+5、启动程序
+
+6、前往测试频道领取对应身份组
 
 ## 执行程序
 

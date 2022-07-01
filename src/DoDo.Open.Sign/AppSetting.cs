@@ -36,9 +36,19 @@
         public string Command { get; set; }
 
         /// <summary>
+        /// 积分名称
+        /// </summary>
+        public string IntegralName { get; set; }
+
+        /// <summary>
         /// 获得积分
         /// </summary>
-        public string Integral { get; set; }
+        public long GetIntegral { get; set; }
+
+        /// <summary>
+        /// 签到回复
+        /// </summary>
+        public string Reply { get; set; }
     }
 
     public class Query
@@ -49,7 +59,7 @@
         public string Command { get; set; }
 
         /// <summary>
-        /// 签到回复
+        /// 查询回复
         /// </summary>
         public string Reply { get; set; }
     }
@@ -60,5 +70,10 @@
         /// 转账指令
         /// </summary>
         public string Command { get; set; }
+
+        /// <summary>
+        /// 转账回复
+        /// </summary>
+        public string Reply { get; set; }
     }
 }

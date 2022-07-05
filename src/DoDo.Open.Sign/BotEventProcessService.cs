@@ -3,7 +3,6 @@ using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Messages;
 using DoDo.Open.Sdk.Services;
-using Newtonsoft.Json;
 
 namespace DoDo.Open.Sign
 {
@@ -130,7 +129,7 @@ namespace DoDo.Open.Sign
 
                     if (matchResult.Groups.Count > 2)
                     {
-                        transferIntegral = Convert.ToInt64(matchResult.Groups[2].Value);
+                       long.TryParse(matchResult.Groups[2].Value, out transferIntegral);
                     }
 
                     if (!string.IsNullOrEmpty(targetDoDoId) && transferIntegral > 0)

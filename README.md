@@ -21,9 +21,11 @@
 
 </div>
 
+
 ## 项目介绍
 
 本项目包含了DoDo开放平台机器人开发相关Demo，Demo基于DoDo开放平台官方 [.Net SDK](https://github.com/dodo-open/dodo-open-net)
+
 
 ## 开发工具
 
@@ -31,11 +33,14 @@
 
 安装时，请勾选ASP.NET和Web开发组件，其他组件按需安装
 
+
 ## 执行程序
 
 对于不具有开发能力的普通用户，本项目提供了编译完成的Windows执行程序，可以从 [Release](https://github.com/Rhyheart/dodo-open-demo/releases) 中进行下载，本执行程序依赖.Net 6运行环境，因此您需要先下载安装 [dotnet-runtime-6.0.6-win-x64.exe](https://download.visualstudio.microsoft.com/download/pr/7989338b-8ae9-4a5d-8425-020148016812/c26361fde7f706279265a505b4d1d93a/dotnet-runtime-6.0.6-win-x64.exe) 到您的电脑中！
 
+
 ## 项目列表
+
 
 ### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
@@ -61,6 +66,7 @@
 
 [【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
 
+
 ### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
 #### 项目介绍
@@ -85,6 +91,7 @@
 
 [【DoDo教程】基础信息机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
 
+
 ### [NFT身份组机器人（DoDo.Open.NftRole）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
 #### 项目介绍
@@ -105,6 +112,27 @@
 
 6、前往测试频道领取对应身份组
 
+
+### [签到机器人（DoDo.Open.Sign）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
+
+#### 项目介绍
+
+该项目用于实现用户签到相关功能，包含签到、查询、转账
+
+#### 使用步骤
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Sign/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`签到`、`查询`、`转账`指令即可，所有指令均可通过修改配置文件实现自定义
+
 #### 视频教程
 
-[【DoDo教程】NFT身份组机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+[【DoDo教程】签到机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)

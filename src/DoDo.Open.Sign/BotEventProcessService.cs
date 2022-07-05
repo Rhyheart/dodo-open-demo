@@ -157,7 +157,7 @@ namespace DoDo.Open.Sign
                                             .Replace("{DoDoId}", eventBody.DodoId)
                                             .Replace("{NickName}", eventBody.Member.NickName)
                                             .Replace("{TargetDoDoId}", $"{targetDoDoId}")
-                                            .Replace("{TargetIntegral}", $"{targetIntegral}")
+                                            .Replace("{TransferIntegral}", $"{transferIntegral}")
                                             .Replace("{IntegralName}", _appSetting.Sign.IntegralName);
                                     }
                                     else

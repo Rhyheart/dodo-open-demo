@@ -112,6 +112,10 @@
 
 6、前往测试频道领取对应身份组
 
+#### 视频教程
+
+[【DoDo教程】NFT身份组机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+
 
 ### [签到机器人（DoDo.Open.Sign）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
 

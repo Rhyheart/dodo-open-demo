@@ -142,7 +142,7 @@
 [【DoDo教程】签到机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
 
 
-### [检索机器人（DoDo.Open.Sign）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
+### [检索机器人（DoDo.Open.Search）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
 
 #### 项目介绍
 

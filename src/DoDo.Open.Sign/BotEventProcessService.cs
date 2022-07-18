@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Messages;
@@ -9,17 +10,19 @@ namespace DoDo.Open.Sign
     public class BotEventProcessService : EventProcessService
     {
         private readonly OpenApiService _openApiService;
+        private readonly OpenApiOptions _openApiOptions;
         private readonly AppSetting _appSetting;
 
         public BotEventProcessService(OpenApiService openApiService, AppSetting appSetting)
         {
             _openApiService = openApiService;
+            _openApiOptions = openApiService.GetBotOptions();
             _appSetting = appSetting;
         }
 
         public override void Connected(string message)
         {
-            Console.WriteLine($"\n{message}\n");
+            _openApiOptions.Log?.Invoke($"Connected: {message}");
 
             #region 签到初始化
 
@@ -34,17 +37,22 @@ namespace DoDo.Open.Sign
 
         public override void Disconnected(string message)
         {
-            Console.WriteLine(message);
+            _openApiOptions.Log?.Invoke($"Disconnected: {message}");
         }
 
         public override void Reconnected(string message)
         {
-            Console.WriteLine(message);
+            _openApiOptions.Log?.Invoke($"Reconnected: {message}");
         }
 
         public override void Exception(string message)
         {
-            Console.WriteLine(message);
+            _openApiOptions.Log?.Invoke($"Exception: {message}");
+        }
+
+        public override void Received(string message)
+        {
+            _openApiOptions.Log?.Invoke($"Received: {message}");
         }
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)

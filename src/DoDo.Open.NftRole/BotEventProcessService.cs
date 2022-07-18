@@ -61,13 +61,17 @@ namespace DoDo.Open.NftRole
                 foreach (var item in _appSetting.RuleList)
                 {
                     content += $"选择{item.Emoji}，获得身份组 [ {roleList.FirstOrDefault(x => x.RoleId == item.RoleId)?.RoleName} ]，";
-                    if (string.IsNullOrWhiteSpace(item.Series))
+                    if (string.IsNullOrWhiteSpace(item.Issuer))
                     {
-                        content += $"需要拥有发行方 [ {item.Issuer} ] 的数字藏品。\n";
+                        content += $"需要拥有 [ {item.PlatformName} ] 的数字藏品\n";
+                    }
+                    else if (string.IsNullOrWhiteSpace(item.Series))
+                    {
+                        content += $"需要拥有 [ {item.PlatformName} ] 下发行方 [ {item.Issuer} ] 的数字藏品\n";
                     }
                     else
                     {
-                        content += $"需要拥有发行方 [ {item.Issuer} ] 下 [ {item.Series} ] 系列的数字藏品。\n";
+                        content += $"需要拥有 [ {item.PlatformName} ] 下发行方 [ {item.Issuer} ] 下 [ {item.Series} ] 系列的数字藏品\n";
                     }
                 }
 

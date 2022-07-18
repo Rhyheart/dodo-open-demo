@@ -47,7 +47,7 @@ namespace DoDo.Open.Sign
             Console.WriteLine(message);
         }
 
-        public override void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
+        public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
             var eventBody = input.Data.EventBody;
 
@@ -129,7 +129,7 @@ namespace DoDo.Open.Sign
 
                     if (matchResult.Groups.Count > 2)
                     {
-                       long.TryParse(matchResult.Groups[2].Value, out transferIntegral);
+                        long.TryParse(matchResult.Groups[2].Value, out transferIntegral);
                     }
 
                     if (!string.IsNullOrEmpty(targetDoDoId) && transferIntegral > 0)
@@ -195,7 +195,7 @@ namespace DoDo.Open.Sign
 
                 if (reply != defaultReply)
                 {
-                    _openApiService.SetChannelMessageSend(new SetChannelMessageSendInput<MessageBodyText>
+                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                     {
                         ChannelId = eventBody.ChannelId,
                         MessageBody = new MessageBodyText

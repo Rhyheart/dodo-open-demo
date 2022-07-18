@@ -17,7 +17,12 @@ var openApiService = new OpenApiService(new OpenApiOptions
 {
     BaseApi = "https://botopen.imdodo.com",
     ClientId = appSetting.ClientId,
-    Token = appSetting.Token
+    Token = appSetting.Token,
+    Log = message =>
+    {
+        Console.WriteLine(message);
+        Console.WriteLine();
+    }
 });
 
 #region 群基础信息获取

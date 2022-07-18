@@ -1,11 +1,11 @@
-﻿using DoDo.Open.Sdk.Models.Channels;
+﻿using System.Text.Json;
+using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Members;
 using DoDo.Open.Sdk.Models.Messages;
 using DoDo.Open.Sdk.Models.Personals;
 using DoDo.Open.Sdk.Models.Roles;
 using DoDo.Open.Sdk.Services;
-using Newtonsoft.Json;
 
 namespace DoDo.Open.NftRole
 {
@@ -40,7 +40,7 @@ namespace DoDo.Open.NftRole
             if (!string.IsNullOrWhiteSpace(data))
             {
                 //校验配置是否更新
-                var appData = JsonConvert.DeserializeObject<AppData>(data);
+                var appData = JsonSerializer.Deserialize<AppData>(data);
                 if (appData?.Setting == setting)
                 {
                     //发送过消息 且 配置未更新，则直接使用原消息ID
@@ -63,11 +63,11 @@ namespace DoDo.Open.NftRole
                     content += $"选择{item.Emoji}，获得身份组 [ {roleList.FirstOrDefault(x => x.RoleId == item.RoleId)?.RoleName} ]，";
                     if (string.IsNullOrWhiteSpace(item.Series))
                     {
-                        content += $"需要拥有发行商 [ {item.Issuer} ] 的数字藏品。\n";
+                        content += $"需要拥有发行方 [ {item.Issuer} ] 的数字藏品。\n";
                     }
                     else
                     {
-                        content += $"需要拥有发行商 [ {item.Issuer} ] 下 [ {item.Series} ] 系列的数字藏品。\n";
+                        content += $"需要拥有发行方 [ {item.Issuer} ] 下 [ {item.Series} ] 系列的数字藏品。\n";
                     }
                 }
 
@@ -87,7 +87,7 @@ namespace DoDo.Open.NftRole
                     _openApiService.SetChannelMessageReactionAdd(new SetChannelMessageReactionAddInput
                     {
                         MessageId = setChannelMessageSendOutput.MessageId,
-                        ReactionEmoji = new MessageModelEmoji
+                        Emoji = new MessageModelEmoji
                         {
                             Type = 1,
                             Id = $"{char.ConvertToUtf32(item.Emoji, 0)}"
@@ -98,7 +98,7 @@ namespace DoDo.Open.NftRole
                 //若身份组领取消息发送成功，则记录并存储当前消息ID
                 _appSetting.MessageId = setChannelMessageSendOutput.MessageId;
                 using var writer = new StreamWriter(dataFilePath, false);
-                writer.Write(JsonConvert.SerializeObject(new AppData
+                writer.Write(JsonSerializer.Serialize(new AppData
                 {
                     MessageId = _appSetting.MessageId,
                     Setting = setting
@@ -132,7 +132,7 @@ namespace DoDo.Open.NftRole
             Console.WriteLine(message);
         }
 
-        public override void MessageReactionEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyMessageReaction>> input)
+        public override async void MessageReactionEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyMessageReaction>> input)
         {
             var eventBody = input.Data.EventBody;
 
@@ -144,80 +144,83 @@ namespace DoDo.Open.NftRole
                 //筛选当前反应的表情对应的规则列表
                 var ruleList = _appSetting.RuleList.Where(x => $"{char.ConvertToUtf32(x.Emoji, 0)}" == eventBody.ReactionEmoji.Id).ToList();
 
-                try
+                //根据规则列表赋予用户相应身份组
+                foreach (var item in ruleList)
                 {
-                    //根据规则列表赋予用户相应身份组
-                    foreach (var item in ruleList)
+                    try
                     {
                         if (eventBody.ReactionType == 1)
                         {
-                            if (string.IsNullOrWhiteSpace(item.Series))
-                            {
-                                item.Series = "全部";
-                            }
-
-                            var getMemberUPowerchainInfoOutput = _openApiService.GetMemberUPowerchainInfo(new GetMemberUPowerchainInfoInput
+                            var result = await _openApiService.GetMemberNftStatusAsync(new GetMemberNftStatusInput
                             {
                                 IslandId = eventBody.IslandId,
-                                DoDoId = eventBody.DodoId,
+                                DodoId = eventBody.DodoId,
+                                Platform = item.Platform,
                                 Issuer = item.Issuer,
                                 Series = item.Series
                             }, true);
 
-                            if (item.Series == "全部")
+                            if (result.IsBandPlatform == 0)
                             {
-                                getMemberUPowerchainInfoOutput.IsHaveSeries = 1;
+                                throw new Exception($"您未绑定 [ {item.PlatformName} ] 钱包");
                             }
 
-                            if (getMemberUPowerchainInfoOutput.IsHaveIssuer == 0)
+                            if (!string.IsNullOrWhiteSpace(item.Issuer))
                             {
-                                throw new Exception($"您没有发行商 [ {item.Issuer} ] 的数字藏品");
+                                if (result.IsHaveIssuer == 0)
+                                {
+                                    throw new Exception($"您没有 [ {item.PlatformName} ] 下 [ {item.Issuer} ] 发行方的数字藏品");
+                                }
+
+                                if (!string.IsNullOrWhiteSpace(item.Series))
+                                {
+                                    if (result.IsHaveSeries == 0)
+                                    {
+                                        throw new Exception($"您没有[ {item.PlatformName} ] 下 [ {item.Issuer} ] 发行方下 [ {item.Series} ] 系列的数字藏品");
+                                    }
+                                }
                             }
 
-                            if (getMemberUPowerchainInfoOutput.IsHaveSeries == 0)
-                            {
-                                throw new Exception($"您没有发行商 [ {item.Issuer} ] 下 [ {item.Series} ] 系列的数字藏品");
-                            }
-
-                            _openApiService.SetRoleMemberAdd(new SetRoleMemberAddInput
+                            await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
                             {
                                 IslandId = eventBody.IslandId,
-                                DoDoId = eventBody.DodoId,
+                                DodoId = eventBody.DodoId,
                                 RoleId = item.RoleId
                             }, true);
                         }
                         else
                         {
-                            _openApiService.SetRoleMemberRemove(new SetRoleMemberRemoveInput
+                            await _openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
                             {
                                 IslandId = eventBody.IslandId,
-                                DoDoId = eventBody.DodoId,
+                                DodoId = eventBody.DodoId,
                                 RoleId = item.RoleId
                             }, true);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    //若用户不满足规则要求，则取消他此时反应的表情
-                    _openApiService.SetChannelMessageReactionRemove(new SetChannelMessageReactionRemoveInput
+                    catch (Exception e)
                     {
-                        MessageId = _appSetting.MessageId,
-                        ReactionEmoji = eventBody.ReactionEmoji,
-                        DoDoId = eventBody.DodoId
-                    });
-
-                    //私聊告知用户不满足规则要求的具体原因
-                    _openApiService.SetPersonalMessageSend(new SetPersonalMessageSendInput<MessageBodyText>
-                    {
-                        DoDoId = eventBody.DodoId,
-                        MessageBody = new MessageBodyText
+                        //若用户不满足规则要求，则取消他此时反应的表情
+                        await _openApiService.SetChannelMessageReactionRemoveAsync(new SetChannelMessageReactionRemoveInput
                         {
-                            Content = e.Message.Replace("当前用户", "您")
-                        }
-                    });
+                            MessageId = _appSetting.MessageId,
+                            Emoji = eventBody.ReactionEmoji,
+                            DodoId = eventBody.DodoId
+                        });
+
+                        //私聊告知用户不满足规则要求的具体原因
+                        await _openApiService.SetPersonalMessageSendAsync(new SetPersonalMessageSendInput<MessageBodyText>
+                        {
+                            DodoId = eventBody.DodoId,
+                            MessageBody = new MessageBodyText
+                            {
+                                Content = e.Message.Replace("当前用户", "您")
+                            }
+                        });
+                    }
                 }
-            } 
+                
+            }
 
             #endregion
 

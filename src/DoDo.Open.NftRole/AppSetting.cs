@@ -51,7 +51,17 @@
         public string RoleId { get; set; }
 
         /// <summary>
-        /// 发行商
+        /// 数藏平台
+        /// </summary>
+        public string Platform { get; set; }
+
+        /// <summary>
+        /// 数藏平台名称
+        /// </summary>
+        public string PlatformName { get; set; }
+
+        /// <summary>
+        /// 发行方
         /// </summary>
         public string Issuer { get; set; }
 

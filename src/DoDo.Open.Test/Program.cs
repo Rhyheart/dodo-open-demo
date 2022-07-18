@@ -14,7 +14,12 @@ var openApiService = new OpenApiService(new OpenApiOptions
 {
     BaseApi = appSetting.BaseApi,
     ClientId = appSetting.ClientId,
-    Token = appSetting.Token
+    Token = appSetting.Token,
+    Log = message =>
+    {
+        Console.WriteLine(message);
+        Console.WriteLine();
+    }
 });
 
 //事件处理服务 - 自定义

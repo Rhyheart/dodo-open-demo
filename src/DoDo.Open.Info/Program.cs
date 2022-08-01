@@ -29,21 +29,21 @@ var openApiService = new OpenApiService(new OpenApiOptions
 
 try
 {
-    Console.WriteLine("\n\n[ 取群信息 ]\n");
+    Console.WriteLine("\n\n[ 获取群信息 ]\n");
 
     openApiService.GetIslandInfo(new GetIslandInfoInput
     {
         IslandId = appSetting.IslandId
     }, true);
 
-    Console.WriteLine("\n[ 取频道列表 ]\n");
+    Console.WriteLine("\n[ 获取频道列表 ]\n");
 
     openApiService.GetChannelList(new GetChannelListInput
     {
         IslandId = appSetting.IslandId
     }, true);
 
-    Console.WriteLine("\n[ 取身份组列表 ]\n");
+    Console.WriteLine("\n[ 获取身份组列表 ]\n");
 
     openApiService.GetRoleList(new GetRoleListInput
     {

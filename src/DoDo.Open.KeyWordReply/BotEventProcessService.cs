@@ -56,10 +56,13 @@ namespace DoDo.Open.KeyWordReply
 
                 #region 关键词回复
 
+                //获取匹配到的规则列表
                 var matchRuleList = _appSetting.RuleList.Where(x => Regex.IsMatch(content, x.KeyWord)).ToList();
+
                 if (matchRuleList.Count > 0)
                 {
-                   reply = matchRuleList[new Random().Next(0, matchRuleList.Count)].Reply;
+                    //从匹配规则列表中随机获取一条规则回复
+                    reply = matchRuleList[new Random().Next(0, matchRuleList.Count)].Reply;
                 }
 
                 #endregion

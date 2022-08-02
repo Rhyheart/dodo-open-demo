@@ -56,36 +56,56 @@ namespace DoDo.Open.ProhibitWordManage
                 var defaultReply = $"<@!{eventBody.DodoId}>";
                 var reply = defaultReply;
 
-                #region 关键词回复
+                #region 违禁词管理
 
+                //获取匹配到的规则列表，并按照禁言时间倒序
                 var matchRuleList = _appSetting.RuleList
                     .Where(x => Regex.IsMatch(content, x.KeyWord))
-                    .OrderByDescending(x=>x.MuteDuration)
+                    .OrderByDescending(x => x.MuteDuration)
                     .ToList();
 
                 if (matchRuleList.Count > 0)
                 {
+                    reply += "\n触发违禁词";
+
+                    //取规则列表第一条数据，按规则进行违禁词管理操作
                     var matchRule = matchRuleList[0];
-                    reply += "触发违禁词";
+
                     if (matchRule.IsWithdraw == 1)
                     {
-                        await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
+                        try //若调用接口成功，则提示，若失败，则不提示
                         {
-                            MessageId = eventBody.MessageId,
-                            Reason = "触发违禁词"
-                        });
-                        reply += "，撤回违禁消息";
+                            await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
+                            {
+                                MessageId = eventBody.MessageId,
+                                Reason = "触发违禁词"
+                            }, true);
+
+                            reply += "，撤回违禁消息";
+                        }
+                        catch (Exception)
+                        {
+                            // ignored
+                        }
                     }
                     if (matchRule.MuteDuration > 0)
                     {
-                        await _openApiService.SetMemberMuteAddAsync(new SetMemberMuteAddInput
+                        try
                         {
-                            IslandId = eventBody.IslandId,
-                            DodoId = eventBody.DodoId,
-                            Duration = matchRule.MuteDuration * 60,
-                            Reason = "触发违禁词"
-                        });
-                        reply += $"，禁言{matchRule.MuteDuration}分钟";
+                            await _openApiService.SetMemberMuteAddAsync(new SetMemberMuteAddInput
+                            {
+                                IslandId = eventBody.IslandId,
+                                DodoId = eventBody.DodoId,
+                                Duration = matchRule.MuteDuration * 60,
+                                Reason = "触发违禁词"
+                            }, true);
+
+                            reply += $"，禁言{matchRule.MuteDuration}分钟";
+                        }
+                        catch (Exception)
+                        {
+                            // ignored
+                        }
                     }
                 }
 

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.NftRole", "DoDo.O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Test", "DoDo.Open.Test\DoDo.Open.Test.csproj", "{8CABE1F0-5C26-4019-8CA8-17B32C0F48C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.Sign", "DoDo.Open.Sign\DoDo.Open.Sign.csproj", "{BC54E692-9FBA-446C-8282-54DD22A27C5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Sign", "DoDo.Open.Sign\DoDo.Open.Sign.csproj", "{BC54E692-9FBA-446C-8282-54DD22A27C5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.Search", "DoDo.Open.Search\DoDo.Open.Search.csproj", "{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Search", "DoDo.Open.Search\DoDo.Open.Search.csproj", "{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.RoleReceive", "DoDo.Open.RoleReceive\DoDo.Open.RoleReceive.csproj", "{54D19C7B-0475-494C-9307-628456E544AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D19C7B-0475-494C-9307-628456E544AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D19C7B-0475-494C-9307-628456E544AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D19C7B-0475-494C-9307-628456E544AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D19C7B-0475-494C-9307-628456E544AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

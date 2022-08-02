@@ -59,8 +59,6 @@ namespace DoDo.Open.Sign
         {
             var eventBody = input.Data.EventBody;
 
-            #region 签到
-
             if (eventBody.MessageBody is MessageBodyText messageBodyText)
             {
                 var content = messageBodyText.Content.Replace(" ", "");
@@ -68,6 +66,8 @@ namespace DoDo.Open.Sign
                 var reply = defaultReply;
 
                 var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
+
+                #region 签到
 
                 if (content == (_appSetting.Sign.Command))//签到
                 {

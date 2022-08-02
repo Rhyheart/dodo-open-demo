@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Search", "DoDo.Op
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.RoleReceive", "DoDo.Open.RoleReceive\DoDo.Open.RoleReceive.csproj", "{54D19C7B-0475-494C-9307-628456E544AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.KeyWordReply", "DoDo.Open.KeyWordReply\DoDo.Open.KeyWordReply.csproj", "{634ECDFF-C43B-4B74-A92E-29EE47A164F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{54D19C7B-0475-494C-9307-628456E544AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54D19C7B-0475-494C-9307-628456E544AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54D19C7B-0475-494C-9307-628456E544AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

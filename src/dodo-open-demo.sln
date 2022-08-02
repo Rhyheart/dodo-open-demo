@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.RoleReceive", "Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.KeyWordReply", "DoDo.Open.KeyWordReply\DoDo.Open.KeyWordReply.csproj", "{634ECDFF-C43B-4B74-A92E-29EE47A164F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.ProhibitWordManage", "DoDo.Open.ProhibitWordManage\DoDo.Open.ProhibitWordManage.csproj", "{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{634ECDFF-C43B-4B74-A92E-29EE47A164F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

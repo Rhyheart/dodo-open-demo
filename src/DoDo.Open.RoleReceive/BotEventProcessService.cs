@@ -63,7 +63,7 @@ namespace DoDo.Open.RoleReceive
 
                 foreach (var item in _appSetting.RuleList)
                 {
-                    content += $"选择{item.Emoji}，获得身份组 [ {roleList.FirstOrDefault(x => x.RoleId == item.RoleId)?.RoleName} ]";
+                    content += $"选择{item.Emoji}，获得身份组 [ {roleList.FirstOrDefault(x => x.RoleId == item.RoleId)?.RoleName} ]\n";
                 }
 
                 //发送身份组领取消息

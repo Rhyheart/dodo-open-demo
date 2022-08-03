@@ -13,13 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Sign", "DoDo.Open
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Search", "DoDo.Open.Search\DoDo.Open.Search.csproj", "{0417AA5C-7A63-40A1-9D07-DA21E3D2B5F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.RoleReceive", "DoDo.Open.RoleReceive\DoDo.Open.RoleReceive.csproj", "{54D19C7B-0475-494C-9307-628456E544AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.RoleReceive", "DoDo.Open.RoleReceive\DoDo.Open.RoleReceive.csproj", "{54D19C7B-0475-494C-9307-628456E544AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.KeyWordReply", "DoDo.Open.KeyWordReply\DoDo.Open.KeyWordReply.csproj", "{634ECDFF-C43B-4B74-A92E-29EE47A164F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.KeyWordReply", "DoDo.Open.KeyWordReply\DoDo.Open.KeyWordReply.csproj", "{634ECDFF-C43B-4B74-A92E-29EE47A164F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.ProhibitWordManage", "DoDo.Open.ProhibitWordManage\DoDo.Open.ProhibitWordManage.csproj", "{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.ProhibitWordManage", "DoDo.Open.ProhibitWordManage\DoDo.Open.ProhibitWordManage.csproj", "{DFFC026E-7A81-4BF3-B0DD-9E266AF25426}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.Solitaire", "DoDo.Open.Solitaire\DoDo.Open.Solitaire.csproj", "{A679FE15-CA67-4DA5-B793-8BFDE5648978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Solitaire", "DoDo.Open.Solitaire\DoDo.Open.Solitaire.csproj", "{A679FE15-CA67-4DA5-B793-8BFDE5648978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.AgingRole", "DoDo.Open.AgingRole\DoDo.Open.AgingRole.csproj", "{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{A679FE15-CA67-4DA5-B793-8BFDE5648978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A679FE15-CA67-4DA5-B793-8BFDE5648978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A679FE15-CA67-4DA5-B793-8BFDE5648978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

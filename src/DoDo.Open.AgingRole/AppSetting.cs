@@ -13,6 +13,11 @@
         public string Token { get; set; }
 
         /// <summary>
+        /// 管理员DoDo号
+        /// </summary>
+        public string AdminDoDoId { get; set; }
+
+        /// <summary>
         /// 周卡配置
         /// </summary>
         public WeekCard WeekCard { get; set; }

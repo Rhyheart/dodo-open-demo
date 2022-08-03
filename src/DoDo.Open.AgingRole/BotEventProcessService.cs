@@ -76,12 +76,7 @@ namespace DoDo.Open.AgingRole
 
                 if (Regex.IsMatch(content, _appSetting.WeekCard.Command) || Regex.IsMatch(content, _appSetting.MonthCard.Command))
                 {
-                    var memberRoleList = await _openApiService.GetMemberRoleListAsync(new GetMemberRoleListInput
-                    {
-                        IslandId = eventBody.IslandId,
-                        DodoId = eventBody.DodoId
-                    });
-                    var isAdmin = memberRoleList.FirstOrDefault(x => x.RoleName == "超级管理员") != null;
+                    var isAdmin = Regex.IsMatch(dodoId, _appSetting.AdminDoDoId);
 
                     if (isAdmin)
                     {
@@ -134,8 +129,7 @@ namespace DoDo.Open.AgingRole
                                     {
                                         DateTime expirationTime;
 
-                                        var oldEntityKey = $"{otherDoDoId}";
-                                        var oldEntityExpirationTime = DataHelper.GetValue<string>(dataPath, oldEntityKey, "ExpirationTime");
+                                        var oldEntityExpirationTime = DataHelper.GetValue<string>(dataPath, otherDoDoId, role.RoleId);
 
                                         if (oldEntityExpirationTime != "")
                                         {
@@ -150,13 +144,13 @@ namespace DoDo.Open.AgingRole
 
                                             oldEntityExpirationTime = expirationTime.ToString("yyyy-MM-dd HH:mm:ss");
 
-                                            DataHelper.SetValue(dataPath, oldEntityKey, role.RoleId, oldEntityExpirationTime);
+                                            DataHelper.SetValue(dataPath, otherDoDoId, role.RoleId, oldEntityExpirationTime);
                                         }
                                         else
                                         {
                                             expirationTime = DateTime.UtcNow.AddDays(day);
 
-                                            DataHelper.SetValue(dataPath, oldEntityKey, role.RoleId, expirationTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                                            DataHelper.SetValue(dataPath, otherDoDoId, role.RoleId, expirationTime.ToString("yyyy-MM-dd HH:mm:ss"));
                                         }
 
                                         reply += "\n**操作成功**";

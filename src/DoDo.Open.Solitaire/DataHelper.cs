@@ -18,7 +18,7 @@ namespace DoDo.Open.Solitaire
         {
             try
             {
-                WritePrivateProfileString(section, key, val.ToString(), filePath);
+                WritePrivateProfileString(section, key, val?.ToString(), filePath);
             }
             catch
             {

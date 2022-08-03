@@ -69,7 +69,7 @@ namespace DoDo.Open.Sign
 
                 #region 签到
 
-                if (content == (_appSetting.Sign.Command))//签到
+                if (content == _appSetting.Sign.Command)//签到
                 {
                     var signTime = DataHelper.GetValue<string>(dataPath, eventBody.DodoId, "SignTime");
                     if (signTime == "" || Convert.ToDateTime(signTime).Date != DateTime.Now.Date)
@@ -101,7 +101,7 @@ namespace DoDo.Open.Sign
                         reply += "\n您今天已经签到过了！";
                     }
                 }
-                else if (content == (_appSetting.Query.Command))//查询
+                else if (content == _appSetting.Query.Command)//查询
                 {
                     var signTime = DataHelper.GetValue<string>(dataPath, eventBody.DodoId, "SignTime");
                     if (signTime != "")

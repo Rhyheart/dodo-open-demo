@@ -276,3 +276,33 @@
 6、测试群内发送`你是谁`、`为什么`等指令即可，所有关键词均可通过修改配置文件实现自定义
 
 </details>
+
+
+<details>
+<summary>九、违禁词管理机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.ProhibitWordManage](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.ProhibitWordManage)
+
+#### 项目介绍
+
+本机器人项目用于实现违禁词管理，用户群内触发违禁词时，机器人会撤回其发言，并进行相应的禁言处罚
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=9)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.ProhibitWordManage/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`草泥马`、`请联系`等指令即可，所有违禁词均可通过修改配置文件实现自定义
+
+</details>

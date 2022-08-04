@@ -1,4 +1,5 @@
 ﻿using DoDo.Open.AgingRole;
+using DoDo.Open.AgingRole.Services;
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Services;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,10 @@ var openApiService = new OpenApiService(new OpenApiOptions
         Console.WriteLine();
     }
 });
+
+//定时任务
+AppEnvironment.OpenApiService = openApiService;
+new ScheduleService().Init();
 
 //事件处理服务 - 自定义
 var eventProcessService = new BotEventProcessService(openApiService, appSetting);

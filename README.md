@@ -41,14 +41,20 @@
 
 ## 项目列表
 
+<details>
+<summary>一、测试机器人</summary>
 
-### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
+#### 项目地址
+
+[DoDo.Open.Test](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
 #### 项目介绍
 
 本机器人项目用于测试DoDo开放平台相关接口，包含大量SDK自带的测试用例
 
 #### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
 
 1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，按照教程创建机器人，获取机器人的`ClientId`和`Token`
 
@@ -62,18 +68,22 @@
 
 6、测试群内发送`菜单`指令即可查看所有测试功能
 
-#### 视频教程
+</details>
 
-[【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
+<details>
+<summary>二、基础信息机器人</summary>
 
+#### 项目地址
 
-### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
+[DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
 #### 项目介绍
 
 本机器人项目用于获取DoDo群相关基础信息，包含 [获取群信息](https://open.imdodo.com/dev/api/island.html#%E8%8E%B7%E5%8F%96%E7%BE%A4%E4%BF%A1%E6%81%AF)、[获取频道列表](https://open.imdodo.com/dev/api/channel.html#%E8%8E%B7%E5%8F%96%E9%A2%91%E9%81%93%E5%88%97%E8%A1%A8)、[获取身份组列表](https://open.imdodo.com/dev/api/role.html#%E8%8E%B7%E5%8F%96%E8%BA%AB%E4%BB%BD%E7%BB%84%E5%88%97%E8%A1%A8) 等功能
 
 #### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
 
 1、创建机器人
 
@@ -87,18 +97,22 @@
 
 4、通过程序控制台可获取到DoDo群相关基础信息
 
-#### 视频教程
+</details>
 
-[【DoDo教程】基础信息机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
+<details>
+<summary>三、NFT身份组机器人</summary>
 
-
-### [NFT身份组机器人（DoDo.Open.NftRole）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
+#### 项目地址
+  
+[DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
 #### 项目介绍
 
 本机器人项目用于实现NFT身份组领取功能，用户通过对NFT身份组领取消息添加对应表情反应，从而获取对应身份组
 
 #### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
 
 1、创建机器人
 
@@ -112,18 +126,22 @@
 
 6、前往测试频道领取对应身份组
 
-#### 视频教程
+</details>
 
-[【DoDo教程】NFT身份组机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+<details>
+<summary>四、签到机器人</summary>
 
+#### 项目地址
 
-### [签到机器人（DoDo.Open.Sign）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
+[DoDo.Open.Sign](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
 
 #### 项目介绍
 
 本机器人项目用于实现用户签到相关功能，包含签到、查询、转账
 
 #### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
 
 1、创建机器人
 
@@ -137,18 +155,23 @@
 
 6、测试群内发送`签到`、`查询`、`转账 @成员 金额`指令即可，所有指令均可通过修改配置文件实现自定义
 
-#### 视频教程
-
-[【DoDo教程】签到机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
+</details>
 
 
-### [检索机器人（DoDo.Open.Search）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
+<details>
+<summary>五、检索机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.Search](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
 
 #### 项目介绍
 
 本机器人项目用于实现各类资源检索
 
 #### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
 
 1、创建机器人
 
@@ -162,6 +185,154 @@
 
 6、测试群内发送`百科 关键词`即可
 
-#### 视频教程
+</details>
 
-[【DoDo教程】检索机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
+
+<details>
+<summary>六、身份组领取机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.RoleReceive](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.RoleReceive)
+
+#### 项目介绍
+
+本机器人项目用于实现身份组领取功能，用户通过对身份组领取消息添加对应表情反应，从而获取对应身份组
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.RoleReceive/appsettings.json)，对于`ChannelId`和`RoleId`，请从`基础信息机器人`中获取
+
+5、启动程序
+
+6、前往测试频道领取对应身份组
+
+</details>
+
+
+<details>
+<summary>七、时效身份组机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.AgingRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.AgingRole)
+
+#### 项目介绍
+
+本机器人项目用于实现时效身份组功能，管理员通过指令给予用户对应时效的身份组，到期后，会自动下掉
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=7)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.AgingRole/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`周卡@用户 身份组名称`、`月卡@用户 身份组名称`指令即可，所有指令均可通过修改配置文件实现自定义
+
+</details>
+
+
+<details>
+<summary>八、关键词回复机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.KeyWordReply](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.KeyWordReply)
+
+#### 项目介绍
+
+本机器人项目用于实现关键词回复功能
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=8)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.KeyWordReply/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`你是谁`、`为什么`等指令即可，所有关键词均可通过修改配置文件实现自定义
+
+</details>
+
+
+<details>
+<summary>九、违禁词管理机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.ProhibitWordManage](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.ProhibitWordManage)
+
+#### 项目介绍
+
+本机器人项目用于实现违禁词管理，用户群内触发违禁词时，机器人会撤回其发言，并进行相应的禁言处罚
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=9)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.ProhibitWordManage/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`草泥马`、`请联系`等指令即可，所有违禁词均可通过修改配置文件实现自定义
+
+</details>
+
+
+<details>
+<summary>十、接龙机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.Solitaire](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Solitaire)
+
+#### 项目介绍
+
+本机器人项目用于实现接龙功能，用户发起接龙任务，其他用户可以加入或者退出
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=10)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Solitaire/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`发起接龙 内容`、`加入接龙`（需要回复指定接龙消息）、`退出接龙`（需要回复指定接龙消息）指令即可，所有违禁词均可通过修改配置文件实现自定义
+
+</details>

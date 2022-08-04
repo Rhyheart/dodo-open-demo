@@ -186,3 +186,63 @@
 6、测试群内发送`百科 关键词`即可
 
 </details>
+
+
+<details>
+<summary>六、身份组领取机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.RoleReceive](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.RoleReceive)
+
+#### 项目介绍
+
+本机器人项目用于实现身份组领取功能，用户通过对身份组领取消息添加对应表情反应，从而获取对应身份组
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.RoleReceive/appsettings.json)，对于`ChannelId`和`RoleId`，请从`基础信息机器人`中获取
+
+5、启动程序
+
+6、前往测试频道领取对应身份组
+
+</details>
+
+
+<details>
+<summary>七、时效身份组机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.AgingRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.AgingRole)
+
+#### 项目介绍
+
+本机器人项目用于实现时效身份组功能，管理员通过指令给予用户对应时效的身份组，到期后，会自动下掉
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=7)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.AgingRole/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`周卡@用户 身份组名称`、`月卡@用户 身份组名称`指令即可，所有指令均可通过修改配置文件实现自定义
+
+</details>

@@ -83,6 +83,8 @@
 
 #### 使用步骤
 
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
+
 1、创建机器人
 
 2、将机器人拉入测试群
@@ -94,10 +96,6 @@
 3、启动程序
 
 4、通过程序控制台可获取到DoDo群相关基础信息
-
-#### 视频教程
-
-[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
 
 </details>
 
@@ -114,6 +112,8 @@
 
 #### 使用步骤
 
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+
 1、创建机器人
 
 2、将机器人拉入测试群
@@ -125,10 +125,6 @@
 5、启动程序
 
 6、前往测试频道领取对应身份组
-
-#### 视频教程
-
-[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
 
 </details>
 
@@ -145,6 +141,8 @@
 
 #### 使用步骤
 
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
+
 1、创建机器人
 
 2、将机器人拉入测试群
@@ -156,10 +154,6 @@
 5、启动程序
 
 6、测试群内发送`签到`、`查询`、`转账 @成员 金额`指令即可，所有指令均可通过修改配置文件实现自定义
-
-#### 视频教程
-
-[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
 
 </details>
 
@@ -177,6 +171,8 @@
 
 #### 使用步骤
 
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
+
 1、创建机器人
 
 2、将机器人拉入测试群
@@ -188,9 +184,5 @@
 5、启动程序
 
 6、测试群内发送`百科 关键词`即可
-
-#### 视频教程
-
-[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
 
 </details>

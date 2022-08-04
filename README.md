@@ -46,7 +46,7 @@
 
 #### 项目地址
 
-[测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
+[DoDo.Open.Test](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
 #### 项目介绍
 
@@ -68,7 +68,7 @@
 
 #### 视频教程
 
-[【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
+[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
 
 </details>
 
@@ -77,7 +77,7 @@
 
 #### 项目地址
 
-[基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
+[DoDo.Open.Info](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 
 #### 项目介绍
 
@@ -99,7 +99,7 @@
 
 #### 视频教程
 
-[【DoDo教程】基础信息机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
+[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=2)
 
 </details>
 
@@ -108,7 +108,7 @@
 
 #### 项目地址
   
-[NFT身份组机器人（DoDo.Open.NftRole）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
+[DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
 
 #### 项目介绍
 
@@ -130,7 +130,7 @@
 
 #### 视频教程
 
-[【DoDo教程】NFT身份组机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
 
 </details>
 
@@ -139,7 +139,7 @@
 
 #### 项目地址
 
-[签到机器人（DoDo.Open.Sign）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
+[DoDo.Open.Sign](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Sign)
 
 #### 项目介绍
 
@@ -161,7 +161,7 @@
 
 #### 视频教程
 
-[【DoDo教程】签到机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
+[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=4)
 
 </details>
 
@@ -171,7 +171,7 @@
 
 #### 项目地址
 
-[检索机器人（DoDo.Open.Search）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
+[DoDo.Open.Search](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Search)
 
 #### 项目介绍
 
@@ -193,6 +193,6 @@
 
 #### 视频教程
 
-[【DoDo教程】检索机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
+[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=5)
 
 </details>

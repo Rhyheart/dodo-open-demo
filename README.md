@@ -43,7 +43,7 @@
 
 <details>
 <summary>测试机器人</summary>
-#### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
+[测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
 #### 项目介绍
 

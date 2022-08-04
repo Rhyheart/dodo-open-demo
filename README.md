@@ -42,33 +42,8 @@
 ## 项目列表
 
 <details>
-<summary>### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)</summary>
+<summary>测试机器人</summary>
 <pre>
-#### 项目介绍
-
-本机器人项目用于测试DoDo开放平台相关接口，包含大量SDK自带的测试用例
-
-#### 使用步骤
-
-1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，按照教程创建机器人，获取机器人的`ClientId`和`Token`
-
-2、将机器人拉入测试群
-
-3、下载解压执行程序
-
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Test/appsettings.json)
-
-5、启动程序
-
-6、测试群内发送`菜单`指令即可查看所有测试功能
-
-#### 视频教程
-
-[【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
-</pre>
-</details>
-
-
 ### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
 #### 项目介绍
@@ -92,7 +67,8 @@
 #### 视频教程
 
 [【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
-
+</pre>
+</details>
 
 ### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)
 

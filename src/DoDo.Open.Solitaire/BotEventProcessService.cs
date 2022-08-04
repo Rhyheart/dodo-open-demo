@@ -116,7 +116,7 @@ namespace DoDo.Open.Solitaire
 
                         if (oldEntityIslandId != "")
                         {
-                            if (oldEntityCreateTime.AddHours(12) > DateTime.UtcNow)
+                            if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
                             {
                                 if (!oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
                                 {
@@ -206,7 +206,7 @@ namespace DoDo.Open.Solitaire
 
                         if (oldEntityIslandId != "")
                         {
-                            if (oldEntityCreateTime.AddHours(12) > DateTime.UtcNow)
+                            if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
                             {
                                 if (oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
                                 {

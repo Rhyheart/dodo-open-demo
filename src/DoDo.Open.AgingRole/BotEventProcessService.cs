@@ -133,20 +133,20 @@ namespace DoDo.Open.AgingRole
 
                                         if (oldEntityExpirationTime > DateTime.MinValue)
                                         {
-                                            if (oldEntityExpirationTime > DateTime.UtcNow)
+                                            if (oldEntityExpirationTime > DateTime.Now)
                                             {
                                                 expirationTime = oldEntityExpirationTime.AddDays(day);
                                             }
                                             else
                                             {
-                                                expirationTime = DateTime.UtcNow.AddDays(day);
+                                                expirationTime = DateTime.Now.AddDays(day);
                                             }
 
                                             DataHelper.WriteValue(dataPath, otherDoDoId, role.RoleId, expirationTime);
                                         }
                                         else
                                         {
-                                            expirationTime = DateTime.UtcNow.AddDays(day);
+                                            expirationTime = DateTime.Now.AddDays(day);
 
                                             DataHelper.WriteValue(dataPath, otherDoDoId, role.RoleId, expirationTime);
                                         }
@@ -188,16 +188,9 @@ namespace DoDo.Open.AgingRole
                 {
                     var regex = Regex.Match(content, $"<@!(.*?)>");
                     var targetDoDoId = regex.Groups[1].Value;
-                    var isAdmin = false;
+                    var isAdmin = Regex.IsMatch(dodoId, _appSetting.AdminDoDoId);
                     if (!string.IsNullOrWhiteSpace(targetDoDoId))
                     {
-                        var memberRoleList = await _openApiService.GetMemberRoleListAsync(new GetMemberRoleListInput
-                        {
-                            IslandId = eventBody.IslandId,
-                            DodoId = eventBody.DodoId
-                        });
-                        isAdmin = memberRoleList.FirstOrDefault(x => x.RoleName == "超级管理员") != null;
-
                         var memberInfo = await _openApiService.GetMemberInfoAsync(new GetMemberInfoInput
                         {
                             IslandId = eventBody.IslandId,
@@ -212,20 +205,27 @@ namespace DoDo.Open.AgingRole
 
                     if (targetDoDoId == dodoId || isAdmin)
                     {
-                        /*var list = dbContext.BotRoles.Where(x => x.ClientId == clientId && x.IslandId == islandId && x.DoDoId == targetDoDoId).ToList();
+                        var memberRoleList = await _openApiService.GetMemberRoleListAsync(new GetMemberRoleListInput
+                        {
+                            IslandId = eventBody.IslandId,
+                            DodoId = targetDoDoId
+                        });
+
+                        var list = DataHelper.ReadKeys(dataPath, targetDoDoId);
+
                         if (list.Count > 0)
                         {
                             reply = $"{nickName} 拥有的时效身份组如下：";
                             foreach (var item in list)
                             {
-                                reply += $"\n【{item.RoleName}】{item.ExpirationTime.AddHours(timeZone):yyyy-MM-dd HH:mm:ss}";
+                                reply += $"\n【{memberRoleList.FirstOrDefault(x => x.RoleId == item)?.RoleName ?? item}】{DataHelper.ReadValue<string>(dataPath, targetDoDoId, item)}";
                             }
                         }
                         else
                         {
                             reply += "\n**查询失败**";
                             reply += $"\n未查询到{(targetDoDoId == dodoId ? "您" : "对方")}的时效身份组信息！";
-                        }*/
+                        }
                     }
                     else
                     {

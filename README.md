@@ -41,6 +41,15 @@
 
 ## 项目列表
 
+<details>
+<summary>测试一下</summary>
+<pre>
+<code>
+System.out.println("Hello to see U!")
+</code>
+</pre>
+</details>
+
 
 ### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 

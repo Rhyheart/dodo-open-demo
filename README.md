@@ -43,7 +43,6 @@
 
 <details>
 <summary>测试机器人</summary>
-<pre>
 ### [测试机器人（DoDo.Open.Test）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Test)
 
 #### 项目介绍
@@ -67,7 +66,6 @@
 #### 视频教程
 
 [【DoDo教程】测试机器人](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
-</pre>
 </details>
 
 ### [基础信息机器人（DoDo.Open.Info）](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.Info)

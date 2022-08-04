@@ -246,3 +246,33 @@
 6、测试群内发送`周卡@用户 身份组名称`、`月卡@用户 身份组名称`指令即可，所有指令均可通过修改配置文件实现自定义
 
 </details>
+
+
+<details>
+<summary>八、关键词回复机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.AgingRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.KeyWordReply)
+
+#### 项目介绍
+
+本机器人项目用于实现关键词回复功能
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=8)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.KeyWordReply/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`你是谁`、`为什么`等指令即可，所有关键词均可通过修改配置文件实现自定义
+
+</details>

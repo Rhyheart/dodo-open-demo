@@ -1,7 +1,31 @@
-﻿using DoDo.Open.AgingRole;
+﻿using System.Text.Json;
+using DoDo.Open.AgingRole;
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Services;
 using Microsoft.Extensions.Configuration;
+
+/*var filePath = "C:\\Users\\Rhyheart\\Desktop\\test.ini";
+
+DataHelper.WriteValue(filePath, "section1", "key1", "value1");
+DataHelper.WriteValue(filePath, "section1", "key2", "value2");
+DataHelper.WriteValue(filePath, "section1", "key3", "value3");
+DataHelper.WriteValue(filePath, "section2", "key1", "value1");
+DataHelper.WriteValue(filePath, "section2", "key2", "value2");
+DataHelper.WriteValue(filePath, "section2", "key3", "value3");
+DataHelper.WriteValue(filePath, "section3", "key1", "value1");
+DataHelper.WriteValue(filePath, "section3", "key2", "value2");
+DataHelper.WriteValue(filePath, "section3", "key3", "value3");
+
+var value = DataHelper.ReadValue<string>(filePath, "section1", "key1");
+Console.WriteLine(value);
+
+var keys = DataHelper.ReadKeys(filePath, "section2");
+Console.WriteLine($"keys:{JsonSerializer.Serialize(keys)}");
+
+var sections = DataHelper.ReadSections(filePath);
+Console.WriteLine($"sections:{JsonSerializer.Serialize(sections)}");
+
+Console.ReadKey();*/
 
 //获取配置
 var configuration = new ConfigurationBuilder()

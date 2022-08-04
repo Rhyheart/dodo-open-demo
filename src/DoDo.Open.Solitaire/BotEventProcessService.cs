@@ -88,11 +88,11 @@ namespace DoDo.Open.Solitaire
 
                         if (!string.IsNullOrWhiteSpace(output.MessageId))
                         {
-                            DataHelper.SetValue(dataPath, output.MessageId, "IslandId", eventBody.IslandId);
-                            DataHelper.SetValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoId);
-                            DataHelper.SetValue(dataPath, output.MessageId, "Content", solitaireContent.Replace("\\n", "\n"));
-                            DataHelper.SetValue(dataPath, output.MessageId, "Reply", solitaireReply.Replace("\\n", "\n"));
-                            DataHelper.SetValue(dataPath, output.MessageId, "CreateTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", eventBody.IslandId);
+                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoId);
+                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", solitaireContent.Replace("\\n", "\n"));
+                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", solitaireReply.Replace("\\n", "\n"));
+                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", DateTime.Now);
                         }
                     }
                     else
@@ -108,15 +108,15 @@ namespace DoDo.Open.Solitaire
                     if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
                     {
                         var oldEntityMessageId = eventBody.Reference.MessageId;
-                        var oldEntityIslandId = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "IslandId");
-                        var oldEntityDoDoId = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "DoDoId");
-                        var oldEntityContent = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
-                        var oldEntityReply = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
-                        var oldEntityCreateTime = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "CreateTime");
+                        var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
+                        var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
+                        var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
+                        var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
+                        var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
 
                         if (oldEntityIslandId != "")
                         {
-                            if (Convert.ToDateTime(oldEntityCreateTime).AddHours(12) > DateTime.UtcNow)
+                            if (oldEntityCreateTime.AddHours(12) > DateTime.UtcNow)
                             {
                                 if (!oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
                                 {
@@ -153,14 +153,14 @@ namespace DoDo.Open.Solitaire
                                             });
 
                                             //删除原配置
-                                            DataHelper.SetValue<string>(dataPath, oldEntityMessageId, null, null);
+                                            DataHelper.DeleteSection(dataPath, oldEntityMessageId);
 
                                             //新增新配置
-                                            DataHelper.SetValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "Content", oldEntityContent.Replace("\n","\\n"));
-                                            DataHelper.SetValue(dataPath, output.MessageId, "Reply", oldEntityReply.Replace("\n","\\n"));
-                                            DataHelper.SetValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent.Replace("\n","\\n"));
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply.Replace("\n","\\n"));
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
                                         }
                                     }
                                     else
@@ -198,15 +198,15 @@ namespace DoDo.Open.Solitaire
                     if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
                     {
                         var oldEntityMessageId = eventBody.Reference.MessageId;
-                        var oldEntityIslandId = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "IslandId");
-                        var oldEntityDoDoId = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "DoDoId");
-                        var oldEntityContent = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
-                        var oldEntityReply = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
-                        var oldEntityCreateTime = DataHelper.GetValue<string>(dataPath, oldEntityMessageId, "CreateTime");
+                        var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
+                        var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
+                        var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
+                        var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
+                        var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
 
                         if (oldEntityIslandId != "")
                         {
-                            if (Convert.ToDateTime(oldEntityCreateTime).AddHours(12) > DateTime.UtcNow)
+                            if (oldEntityCreateTime.AddHours(12) > DateTime.UtcNow)
                             {
                                 if (oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
                                 {
@@ -249,16 +249,16 @@ namespace DoDo.Open.Solitaire
                                         });
 
                                         //删除原配置
-                                        DataHelper.SetValue<string>(dataPath, oldEntityMessageId, null, null);
+                                        DataHelper.DeleteSection(dataPath, oldEntityMessageId);
 
                                         if (list.Count > 0)
                                         {
                                             //新增新配置
-                                            DataHelper.SetValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "Content", oldEntityContent);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "Reply", oldEntityReply);
-                                            DataHelper.SetValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply);
+                                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
                                         }
                                     }
 

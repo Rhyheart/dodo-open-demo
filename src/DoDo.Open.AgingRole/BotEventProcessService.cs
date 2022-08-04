@@ -27,7 +27,7 @@ namespace DoDo.Open.AgingRole
         {
             _openApiOptions.Log?.Invoke($"Connected: {message}");
 
-            #region 失效身份组初始化
+            #region 时效身份组初始化
 
             if (!Directory.Exists($"{Environment.CurrentDirectory}\\data"))
             {
@@ -129,32 +129,30 @@ namespace DoDo.Open.AgingRole
                                     {
                                         DateTime expirationTime;
 
-                                        var oldEntityExpirationTime = DataHelper.GetValue<string>(dataPath, otherDoDoId, role.RoleId);
+                                        var oldEntityExpirationTime = DataHelper.ReadValue<DateTime>(dataPath, otherDoDoId, role.RoleId);
 
-                                        if (oldEntityExpirationTime != "")
+                                        if (oldEntityExpirationTime > DateTime.MinValue)
                                         {
-                                            if (Convert.ToDateTime(oldEntityExpirationTime) > DateTime.UtcNow)
+                                            if (oldEntityExpirationTime > DateTime.UtcNow)
                                             {
-                                                expirationTime = Convert.ToDateTime(oldEntityExpirationTime).AddDays(day);
+                                                expirationTime = oldEntityExpirationTime.AddDays(day);
                                             }
                                             else
                                             {
                                                 expirationTime = DateTime.UtcNow.AddDays(day);
                                             }
 
-                                            oldEntityExpirationTime = expirationTime.ToString("yyyy-MM-dd HH:mm:ss");
-
-                                            DataHelper.SetValue(dataPath, otherDoDoId, role.RoleId, oldEntityExpirationTime);
+                                            DataHelper.WriteValue(dataPath, otherDoDoId, role.RoleId, expirationTime);
                                         }
                                         else
                                         {
                                             expirationTime = DateTime.UtcNow.AddDays(day);
 
-                                            DataHelper.SetValue(dataPath, otherDoDoId, role.RoleId, expirationTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                                            DataHelper.WriteValue(dataPath, otherDoDoId, role.RoleId, expirationTime);
                                         }
 
                                         reply += "\n**操作成功**";
-                                        reply += $"\n成功为<@!{otherDoDoId}> 添加【{roleName}】身份组，时效增加{dayShow}，现到期时间为：{expirationTime:yyyy-MM-dd HH:mm:ss}";
+                                        reply += $"\n成功为<@!{otherDoDoId}> 添加【{roleName}】身份组，时效增加{dayShow}，现到期时间为：{expirationTime}";
                                     }
                                     else
                                     {
@@ -188,7 +186,8 @@ namespace DoDo.Open.AgingRole
                 }
                 else if (Regex.IsMatch(content, _appSetting.Query.Command))
                 {
-                    var targetDoDoId = content.GetMiddle("<@!", ">");
+                    var regex = Regex.Match(content, $"<@!(.*?)>");
+                    var targetDoDoId = regex.Groups[1].Value;
                     var isAdmin = false;
                     if (!string.IsNullOrWhiteSpace(targetDoDoId))
                     {

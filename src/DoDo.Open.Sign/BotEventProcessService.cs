@@ -71,20 +71,20 @@ namespace DoDo.Open.Sign
 
                 if (content == _appSetting.Sign.Command)//签到
                 {
-                    var signTime = DataHelper.GetValue<string>(dataPath, eventBody.DodoId, "SignTime");
-                    if (signTime == "" || Convert.ToDateTime(signTime).Date != DateTime.Now.Date)
+                    var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
+                    if (signTime.Date != DateTime.Now.Date)
                     {
-                        var integral = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "Integral");
-                        var signCount = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "SignCount");
+                        var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
+                        var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
 
                         integral += _appSetting.Sign.GetIntegral;
                         signCount++;
-                        signTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        signTime = DateTime.Now;
 
-                        DataHelper.SetValue(dataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
-                        DataHelper.SetValue(dataPath, eventBody.DodoId, "Integral", integral);
-                        DataHelper.SetValue(dataPath, eventBody.DodoId, "SignCount", signCount);
-                        DataHelper.SetValue(dataPath, eventBody.DodoId, "SignTime", signTime);
+                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
+                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
+                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignCount", signCount);
+                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignTime", signTime);
 
                         reply = _appSetting.Sign.Reply
                             .Replace("{DoDoId}", eventBody.DodoId)
@@ -103,11 +103,11 @@ namespace DoDo.Open.Sign
                 }
                 else if (content == _appSetting.Query.Command)//查询
                 {
-                    var signTime = DataHelper.GetValue<string>(dataPath, eventBody.DodoId, "SignTime");
-                    if (signTime != "")
+                    var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
+                    if (signTime > DateTime.MinValue)
                     {
-                        var integral = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "Integral");
-                        var signCount = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "SignCount");
+                        var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
+                        var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
 
                         reply = _appSetting.Query.Reply
                             .Replace("{DoDoId}", eventBody.DodoId)
@@ -142,24 +142,24 @@ namespace DoDo.Open.Sign
 
                     if (!string.IsNullOrEmpty(targetDoDoId) && transferIntegral > 0)
                     {
-                        var signTime = DataHelper.GetValue<string>(dataPath, eventBody.DodoId, "SignTime");
+                        var signTime = DataHelper.ReadValue<string>(dataPath, eventBody.DodoId, "SignTime");
 
                         if (signTime != "")
                         {
-                            var integral = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "Integral");
+                            var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
                             if (integral >= transferIntegral)
                             {
                                 if (eventBody.DodoId != targetDoDoId)
                                 {
-                                    var targetSignTime = DataHelper.GetValue<string>(dataPath, targetDoDoId, "SignTime");
+                                    var targetSignTime = DataHelper.ReadValue<string>(dataPath, targetDoDoId, "SignTime");
                                     if (targetSignTime != "")
                                     {
-                                        var targetIntegral = DataHelper.GetValue<long>(dataPath, eventBody.DodoId, "Integral");
+                                        var targetIntegral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
 
                                         integral -= transferIntegral;
-                                        DataHelper.SetValue(dataPath, eventBody.DodoId, "Integral", integral);
+                                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
                                         targetIntegral += transferIntegral;
-                                        DataHelper.SetValue(dataPath, targetDoDoId, "Integral", targetIntegral);
+                                        DataHelper.WriteValue(dataPath, targetDoDoId, "Integral", targetIntegral);
 
                                         reply = _appSetting.Transfer.Reply
                                             .Replace("{DoDoId}", eventBody.DodoId)

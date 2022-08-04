@@ -54,6 +54,8 @@
 
 #### 使用步骤
 
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
+
 1、访问 [DoDo开放平台](https://open.imdodo.com/go/introduction/deployment.html)，按照教程创建机器人，获取机器人的`ClientId`和`Token`
 
 2、将机器人拉入测试群
@@ -65,10 +67,6 @@
 5、启动程序
 
 6、测试群内发送`菜单`指令即可查看所有测试功能
-
-#### 视频教程
-
-[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=1)
 
 </details>
 

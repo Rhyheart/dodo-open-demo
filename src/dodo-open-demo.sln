@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.ProhibitWordManag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Solitaire", "DoDo.Open.Solitaire\DoDo.Open.Solitaire.csproj", "{A679FE15-CA67-4DA5-B793-8BFDE5648978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.AgingRole", "DoDo.Open.AgingRole\DoDo.Open.AgingRole.csproj", "{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.AgingRole", "DoDo.Open.AgingRole\DoDo.Open.AgingRole.csproj", "{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.LuckDraw", "DoDo.Open.LuckDraw\DoDo.Open.LuckDraw.csproj", "{1C9C97BB-83AF-489F-B12B-81B1E347854E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using Quartz;
 using Quartz.Impl;
 
-namespace DoDo.Open.AgingRole.Services
+namespace DoDo.Open.LuckDraw.Services
 {
     public class ScheduleService
     {

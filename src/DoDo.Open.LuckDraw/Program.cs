@@ -1,5 +1,5 @@
-﻿using DoDo.Open.AgingRole;
-using DoDo.Open.AgingRole.Services;
+﻿using DoDo.Open.LuckDraw;
+using DoDo.Open.LuckDraw.Services;
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Services;
 using Microsoft.Extensions.Configuration;

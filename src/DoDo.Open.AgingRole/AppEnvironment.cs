@@ -1,6 +1,6 @@
 ﻿using DoDo.Open.Sdk.Services;
 
-namespace DoDo.Open.AgingRole.Services
+namespace DoDo.Open.AgingRole
 {
     public class AppEnvironment
     {

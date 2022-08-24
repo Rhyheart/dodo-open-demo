@@ -1,9 +1,9 @@
 ﻿using DoDo.Open.Sdk.Models.Roles;
 using Quartz;
 
-namespace DoDo.Open.AgingRole.Services
+namespace DoDo.Open.LuckDraw.Services
 {
-    public class AgingRoleJobService : IJob
+    public class JobService : IJob
     {
         public async Task Execute(IJobExecutionContext context)
         {

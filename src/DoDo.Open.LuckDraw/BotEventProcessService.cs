@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using DoDo.Open.Sdk.Models;
@@ -6,6 +7,9 @@ using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Messages;
 using DoDo.Open.Sdk.Services;
+using Microsoft.Extensions.FileSystemGlobbing;
+using Quartz.Util;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DoDo.Open.LuckDraw
 {
@@ -84,8 +88,78 @@ namespace DoDo.Open.LuckDraw
                             {
                                 type = "image",
                                 src = "https://img.imdodo.com/upload/cdn/4803E0BBF8678A657EBD762D7AC45710_1660189645624.png"
+                            },
+                            new
+                            {
+                                type = "dodo-md",
+                                content = "群昵称"
                             }
                         }
+                    });
+
+                    components.Add(new
+                    {
+                        type = "section",
+                        text = new
+                        {
+                            type = "dodo-md",
+                            content = "[DoDo号][昵称]发起的抽奖。"
+                        }
+                    });
+
+                    components.Add(new
+                    {
+                        type = "button-group",
+                        elements = new List<object>
+                        {
+                            new
+                            {
+                                type = "button",
+                                interactCustomId = "交互自定义id4",
+                                click = new
+                                {
+                                    action = "form",
+                                    value = ""
+                                },
+                                color = "grey",
+                                name = "填写抽奖内容发起抽奖",
+                                form = new
+                                {
+                                    title = "表单标题",
+                                    elements = new List<object>
+                                    {
+                                        new
+                                        {
+                                            type = "input",
+                                            key = "选项自定义id2",
+                                            title = "填写抽奖时间，填1时为1分钟。",
+                                            rows = 1,
+                                            placeholder = "请输入阿拉伯数字，1000字符限制",
+                                            minChar = 0,
+                                            maxChar = 1000
+                                        },
+                                        new
+                                        {
+                                            type = "input",
+                                            key = "选项自定义id1",
+                                            title = "填写抽奖的标题和内容",
+                                            rows = 4,
+                                            placeholder = "4000字符限制",
+                                            minChar = 1,
+                                            maxChar = 4000
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    components.Add(new
+                    {
+                        type = "countdown",
+                        title = "发起抽奖时，倒计时10分钟结束后失效",
+                        style = "hour",
+                        endTime = 1661326563341
                     });
 
                     await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyCard>

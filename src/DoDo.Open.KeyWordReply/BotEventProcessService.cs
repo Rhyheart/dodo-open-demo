@@ -47,40 +47,46 @@ namespace DoDo.Open.KeyWordReply
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var reply = "";
+                var eventBody = input.Data.EventBody;
 
-                #region 关键词回复
-
-                //获取匹配到的规则列表
-                var matchRuleList = _appSetting.RuleList.Where(x => Regex.IsMatch(content, x.KeyWord)).ToList();
-
-                if (matchRuleList.Count > 0)
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    //从匹配规则列表中随机获取一条规则回复
-                    reply = matchRuleList[new Random().Next(0, matchRuleList.Count)].Reply;
-                }
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var reply = "";
 
-                #endregion
+                    #region 关键词回复
 
-                if (reply != "")
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
+                    //获取匹配到的规则列表
+                    var matchRuleList = _appSetting.RuleList.Where(x => Regex.IsMatch(content, x.KeyWord)).ToList();
+
+                    if (matchRuleList.Count > 0)
                     {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
+                        //从匹配规则列表中随机获取一条规则回复
+                        reply = matchRuleList[new Random().Next(0, matchRuleList.Count)].Reply;
+                    }
+
+                    #endregion
+
+                    if (reply != "")
+                    {
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {
-                            Content = reply
-                        }
-                    });
+                            ChannelId = eventBody.ChannelId,
+                            MessageBody = new MessageBodyText
+                            {
+                                Content = reply
+                            }
+                        });
+                    }
+
                 }
-
             }
-
+            catch (Exception e)
+            {
+                Exception(e.Message);
+            }
         }
     }
 }

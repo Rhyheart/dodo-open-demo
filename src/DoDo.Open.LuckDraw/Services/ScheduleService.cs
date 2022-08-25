@@ -21,7 +21,7 @@ namespace DoDo.Open.LuckDraw.Services
                 .Build();
             var roleTrigger = TriggerBuilder.Create()
                 .WithIdentity("CommonTrigger", "Common")
-                .WithCronSchedule("0 */30 * * * ?")
+                .WithCronSchedule("*/10 * * * * ?")
                 .Build();
             await scheduler.ScheduleJob(jobService, roleTrigger);
         }

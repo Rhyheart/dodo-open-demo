@@ -48,81 +48,88 @@ namespace DoDo.Open.ProhibitWordManage
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var defaultReply = $"<@!{eventBody.DodoId}>";
-                var reply = defaultReply;
+                var eventBody = input.Data.EventBody;
 
-                #region 违禁词管理
-
-                //获取匹配到的规则列表，并按照禁言时间倒序
-                var matchRuleList = _appSetting.RuleList
-                    .Where(x => Regex.IsMatch(content, x.KeyWord))
-                    .OrderByDescending(x => x.MuteDuration)
-                    .ToList();
-
-                if (matchRuleList.Count > 0)
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    reply += "\n触发违禁词";
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var reply = defaultReply;
 
-                    //取规则列表第一条数据，按规则进行违禁词管理操作
-                    var matchRule = matchRuleList[0];
+                    #region 违禁词管理
 
-                    if (matchRule.IsWithdraw == 1)
+                    //获取匹配到的规则列表，并按照禁言时间倒序
+                    var matchRuleList = _appSetting.RuleList
+                        .Where(x => Regex.IsMatch(content, x.KeyWord))
+                        .OrderByDescending(x => x.MuteDuration)
+                        .ToList();
+
+                    if (matchRuleList.Count > 0)
                     {
-                        try //若调用接口成功，则提示，若失败，则不提示
-                        {
-                            await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
-                            {
-                                MessageId = eventBody.MessageId,
-                                Reason = "触发违禁词"
-                            }, true);
+                        reply += "\n触发违禁词";
 
-                            reply += "，撤回违禁消息";
-                        }
-                        catch (Exception)
+                        //取规则列表第一条数据，按规则进行违禁词管理操作
+                        var matchRule = matchRuleList[0];
+
+                        if (matchRule.IsWithdraw == 1)
                         {
-                            // ignored
+                            try //若调用接口成功，则提示，若失败，则不提示
+                            {
+                                await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
+                                {
+                                    MessageId = eventBody.MessageId,
+                                    Reason = "触发违禁词"
+                                }, true);
+
+                                reply += "，撤回违禁消息";
+                            }
+                            catch (Exception)
+                            {
+                                // ignored
+                            }
+                        }
+                        if (matchRule.MuteDuration > 0)
+                        {
+                            try
+                            {
+                                await _openApiService.SetMemberMuteAddAsync(new SetMemberMuteAddInput
+                                {
+                                    IslandId = eventBody.IslandId,
+                                    DodoId = eventBody.DodoId,
+                                    Duration = matchRule.MuteDuration * 60,
+                                    Reason = "触发违禁词"
+                                }, true);
+
+                                reply += $"，禁言{matchRule.MuteDuration}分钟";
+                            }
+                            catch (Exception)
+                            {
+                                // ignored
+                            }
                         }
                     }
-                    if (matchRule.MuteDuration > 0)
+
+                    #endregion
+
+                    if (reply != defaultReply)
                     {
-                        try
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {
-                            await _openApiService.SetMemberMuteAddAsync(new SetMemberMuteAddInput
+                            ChannelId = eventBody.ChannelId,
+                            MessageBody = new MessageBodyText
                             {
-                                IslandId = eventBody.IslandId,
-                                DodoId = eventBody.DodoId,
-                                Duration = matchRule.MuteDuration * 60,
-                                Reason = "触发违禁词"
-                            }, true);
-
-                            reply += $"，禁言{matchRule.MuteDuration}分钟";
-                        }
-                        catch (Exception)
-                        {
-                            // ignored
-                        }
+                                Content = reply
+                            }
+                        });
                     }
+
                 }
-
-                #endregion
-
-                if (reply != defaultReply)
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
-                    {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
-                        {
-                            Content = reply
-                        }
-                    });
-                }
-
+            }
+            catch (Exception e)
+            {
+                Exception(e.Message);
             }
 
         }

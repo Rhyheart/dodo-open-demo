@@ -57,82 +57,180 @@ namespace DoDo.Open.Solitaire
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var defaultReply = $"<@!{eventBody.DodoId}>";
-                var reply = defaultReply;
+                var eventBody = input.Data.EventBody;
 
-                var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
-
-                #region 接龙
-
-                if (Regex.IsMatch(content, _appSetting.StartSolitaire.Command))//发起接龙
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    var matchResult = Regex.Match(content, _appSetting.StartSolitaire.Command);
-                    var solitaireContent = matchResult.Groups[1].Value;
-                    if (!string.IsNullOrWhiteSpace(solitaireContent))
-                    {
-                        var solitaireReply = $"<@!{eventBody.DodoId}>";
-                        var showReply = $"1. {solitaireReply}";
-                        var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
-                        {
-                            ChannelId = eventBody.ChannelId,
-                            MessageBody = new MessageBodyText
-                            {
-                                Content = $">#接龙 {solitaireContent}\n\n{showReply}"
-                            }
-                        });
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var reply = defaultReply;
 
-                        if (!string.IsNullOrWhiteSpace(output.MessageId))
+                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
+
+                    #region 接龙
+
+                    if (Regex.IsMatch(content, _appSetting.StartSolitaire.Command))//发起接龙
+                    {
+                        var matchResult = Regex.Match(content, _appSetting.StartSolitaire.Command);
+                        var solitaireContent = matchResult.Groups[1].Value;
+                        if (!string.IsNullOrWhiteSpace(solitaireContent))
                         {
-                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", eventBody.IslandId);
-                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoId);
-                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", solitaireContent.Replace("\\n", "\n"));
-                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", solitaireReply.Replace("\\n", "\n"));
-                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", DateTime.Now);
+                            var solitaireReply = $"<@!{eventBody.DodoId}>";
+                            var showReply = $"1. {solitaireReply}";
+                            var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
+                            {
+                                ChannelId = eventBody.ChannelId,
+                                MessageBody = new MessageBodyText
+                                {
+                                    Content = $">#接龙 {solitaireContent}\n\n{showReply}"
+                                }
+                            });
+
+                            if (!string.IsNullOrWhiteSpace(output.MessageId))
+                            {
+                                DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", eventBody.IslandId);
+                                DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoId);
+                                DataHelper.WriteValue(dataPath, output.MessageId, "Content", solitaireContent.Replace("\\n", "\n"));
+                                DataHelper.WriteValue(dataPath, output.MessageId, "Reply", solitaireReply.Replace("\\n", "\n"));
+                                DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", DateTime.Now);
+                            }
+                        }
+                        else
+                        {
+                            reply += "\n**发起接龙失败**";
+                            reply += "\n您发送的指令格式有误！";
                         }
                     }
-                    else
+                    else if (Regex.IsMatch(content, _appSetting.JoinSolitaire.Command))//加入接龙
                     {
-                        reply += "\n**发起接龙失败**";
-                        reply += "\n您发送的指令格式有误！";
-                    }
-                }
-                else if (Regex.IsMatch(content, _appSetting.JoinSolitaire.Command))//加入接龙
-                {
-                    var matchResult = Regex.Match(content, _appSetting.JoinSolitaire.Command);
-                    var solitaireReply = matchResult.Groups[2].Value;
-                    if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
-                    {
-                        var oldEntityMessageId = eventBody.Reference.MessageId;
-                        var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
-                        var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
-                        var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
-                        var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
-                        var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
-
-                        if (oldEntityIslandId != "")
+                        var matchResult = Regex.Match(content, _appSetting.JoinSolitaire.Command);
+                        var solitaireReply = matchResult.Groups[2].Value;
+                        if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
                         {
-                            if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
-                            {
-                                if (!oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
-                                {
-                                    solitaireReply = solitaireReply.Replace("\n", "");
+                            var oldEntityMessageId = eventBody.Reference.MessageId;
+                            var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
+                            var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
+                            var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n", "\n");
+                            var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n", "\n");
+                            var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
 
-                                    if (!string.IsNullOrWhiteSpace(oldEntityReply))
+                            if (oldEntityIslandId != "")
+                            {
+                                if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
+                                {
+                                    if (!oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
                                     {
-                                        var list = oldEntityReply.Split("\n").ToList();
-                                        list.Add($"<@!{eventBody.DodoId}> {solitaireReply}");
+                                        solitaireReply = solitaireReply.Replace("\n", "");
+
+                                        if (!string.IsNullOrWhiteSpace(oldEntityReply))
+                                        {
+                                            var list = oldEntityReply.Split("\n").ToList();
+                                            list.Add($"<@!{eventBody.DodoId}> {solitaireReply}");
+
+                                            oldEntityReply = string.Join("\n", list);
+
+                                            var showReply = "";
+                                            for (var i = 0; i < list.Count; i++)
+                                            {
+                                                showReply += $"{i + 1}. {list[i]}\n";
+                                            }
+
+                                            var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
+                                            {
+                                                ChannelId = eventBody.ChannelId,
+                                                MessageBody = new MessageBodyText
+                                                {
+                                                    Content = $">#接龙 {oldEntityContent}\n\n{showReply}"
+                                                }
+                                            });
+
+                                            if (!string.IsNullOrWhiteSpace(output.MessageId))
+                                            {
+                                                await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
+                                                {
+                                                    MessageId = oldEntityMessageId,
+                                                    Reason = "接龙撤回"
+                                                });
+
+                                                //删除原配置
+                                                DataHelper.DeleteSection(dataPath, oldEntityMessageId);
+
+                                                //新增新配置
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent.Replace("\n", "\\n"));
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply.Replace("\n", "\\n"));
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            reply += "\n**加入接龙失败**";
+                                            reply += "\n您要加入的接龙消息已失效！";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        reply += "\n**加入接龙失败**";
+                                        reply += "\n您已加入过该条接龙！";
+                                    }
+                                }
+                                else
+                                {
+                                    reply += "\n**加入接龙失败**";
+                                    reply += "\n您要加入的接龙消息已失效！";
+                                }
+                            }
+                            else
+                            {
+                                reply += "\n**加入接龙失败**";
+                                reply += "\n您回复的消息并非接龙消息！";
+                            }
+                        }
+                        else
+                        {
+                            reply += "\n**加入接龙失败**";
+                            reply += "\n请回复您要加入的接龙消息！";
+                        }
+                    }
+                    else if (Regex.IsMatch(content, _appSetting.LeaveSolitaire.Command))//退出接龙
+                    {
+                        if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
+                        {
+                            var oldEntityMessageId = eventBody.Reference.MessageId;
+                            var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
+                            var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
+                            var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n", "\n");
+                            var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n", "\n");
+                            var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
+
+                            if (oldEntityIslandId != "")
+                            {
+                                if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
+                                {
+                                    if (oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
+                                    {
+                                        var list = oldEntityReply.Split("\n")
+                                            .ToList()
+                                            .Where(x => !x.StartsWith($"<@!{eventBody.DodoId}>"))
+                                            .ToList();
 
                                         oldEntityReply = string.Join("\n", list);
 
                                         var showReply = "";
-                                        for (var i = 0; i < list.Count; i++)
+
+                                        if (list.Count > 0)
                                         {
-                                            showReply += $"{i + 1}. {list[i]}\n";
+                                            for (var i = 0; i < list.Count; i++)
+                                            {
+                                                showReply += $"{i + 1}. {list[i]}\n";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            showReply = "该条接龙已失效！";
                                         }
 
                                         var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
@@ -155,155 +253,63 @@ namespace DoDo.Open.Solitaire
                                             //删除原配置
                                             DataHelper.DeleteSection(dataPath, oldEntityMessageId);
 
-                                            //新增新配置
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent.Replace("\n","\\n"));
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply.Replace("\n","\\n"));
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
+                                            if (list.Count > 0)
+                                            {
+                                                //新增新配置
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply);
+                                                DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
+                                            }
                                         }
+
                                     }
                                     else
                                     {
-                                        reply += "\n**加入接龙失败**";
-                                        reply += "\n您要加入的接龙消息已失效！";
+                                        reply += "\n**退出接龙失败**";
+                                        reply += "\n您尚未加入该条接龙！";
                                     }
-                                }
-                                else
-                                {
-                                    reply += "\n**加入接龙失败**";
-                                    reply += "\n您已加入过该条接龙！";
-                                }
-                            }
-                            else
-                            {
-                                reply += "\n**加入接龙失败**";
-                                reply += "\n您要加入的接龙消息已失效！";
-                            }
-                        }
-                        else
-                        {
-                            reply += "\n**加入接龙失败**";
-                            reply += "\n您回复的消息并非接龙消息！";
-                        }
-                    }
-                    else
-                    {
-                        reply += "\n**加入接龙失败**";
-                        reply += "\n请回复您要加入的接龙消息！";
-                    }
-                }
-                else if (Regex.IsMatch(content, _appSetting.LeaveSolitaire.Command))//退出接龙
-                {
-                    if (!string.IsNullOrWhiteSpace(eventBody.Reference.MessageId))
-                    {
-                        var oldEntityMessageId = eventBody.Reference.MessageId;
-                        var oldEntityIslandId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "IslandId");
-                        var oldEntityDoDoId = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "DoDoId");
-                        var oldEntityContent = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Content").Replace("\\n","\n");
-                        var oldEntityReply = DataHelper.ReadValue<string>(dataPath, oldEntityMessageId, "Reply").Replace("\\n","\n");
-                        var oldEntityCreateTime = DataHelper.ReadValue<DateTime>(dataPath, oldEntityMessageId, "CreateTime");
-
-                        if (oldEntityIslandId != "")
-                        {
-                            if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
-                            {
-                                if (oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
-                                {
-                                    var list = oldEntityReply.Split("\n")
-                                        .ToList()
-                                        .Where(x => !x.StartsWith($"<@!{eventBody.DodoId}>"))
-                                        .ToList();
-
-                                    oldEntityReply = string.Join("\n", list);
-
-                                    var showReply = "";
-
-                                    if (list.Count > 0)
-                                    {
-                                        for (var i = 0; i < list.Count; i++)
-                                        {
-                                            showReply += $"{i + 1}. {list[i]}\n";
-                                        }
-                                    }
-                                    else
-                                    {
-                                        showReply = "该条接龙已失效！";
-                                    }
-
-                                    var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
-                                    {
-                                        ChannelId = eventBody.ChannelId,
-                                        MessageBody = new MessageBodyText
-                                        {
-                                            Content = $">#接龙 {oldEntityContent}\n\n{showReply}"
-                                        }
-                                    });
-
-                                    if (!string.IsNullOrWhiteSpace(output.MessageId))
-                                    {
-                                        await _openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
-                                        {
-                                            MessageId = oldEntityMessageId,
-                                            Reason = "接龙撤回"
-                                        });
-
-                                        //删除原配置
-                                        DataHelper.DeleteSection(dataPath, oldEntityMessageId);
-
-                                        if (list.Count > 0)
-                                        {
-                                            //新增新配置
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", oldEntityIslandId);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", oldEntityDoDoId);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "Content", oldEntityContent);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "Reply", oldEntityReply);
-                                            DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", oldEntityCreateTime);
-                                        }
-                                    }
-
                                 }
                                 else
                                 {
                                     reply += "\n**退出接龙失败**";
-                                    reply += "\n您尚未加入该条接龙！";
+                                    reply += "\n您要退出的接龙消息已失效！";
                                 }
                             }
                             else
                             {
                                 reply += "\n**退出接龙失败**";
-                                reply += "\n您要退出的接龙消息已失效！";
+                                reply += "\n您回复的消息并非接龙消息！";
                             }
                         }
                         else
                         {
                             reply += "\n**退出接龙失败**";
-                            reply += "\n您回复的消息并非接龙消息！";
+                            reply += "\n请回复您要退出的接龙消息！";
                         }
                     }
-                    else
-                    {
-                        reply += "\n**退出接龙失败**";
-                        reply += "\n请回复您要退出的接龙消息！";
-                    }
-                }
 
-                #endregion
+                    #endregion
 
-                if (reply != defaultReply)
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
+                    if (reply != defaultReply)
                     {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {
-                            Content = reply
-                        }
-                    });
+                            ChannelId = eventBody.ChannelId,
+                            MessageBody = new MessageBodyText
+                            {
+                                Content = reply
+                            }
+                        });
+                    }
+
                 }
-
             }
-
+            catch (Exception e)
+            {
+                Exception(e.Message);
+            }
         }
     }
 }

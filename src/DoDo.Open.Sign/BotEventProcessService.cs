@@ -57,164 +57,170 @@ namespace DoDo.Open.Sign
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var defaultReply = $"<@!{eventBody.DodoId}>";
-                var reply = defaultReply;
+                var eventBody = input.Data.EventBody;
 
-                var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
-
-                #region 签到
-
-                if (content == _appSetting.Sign.Command)//签到
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
-                    if (signTime.Date != DateTime.Now.Date)
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var reply = defaultReply;
+
+                    #region 签到
+
+                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
+
+                    if (content == _appSetting.Sign.Command)//签到
                     {
-                        var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
-                        var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
-
-                        integral += _appSetting.Sign.GetIntegral;
-                        signCount++;
-                        signTime = DateTime.Now;
-
-                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
-                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
-                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignCount", signCount);
-                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignTime", signTime);
-
-                        reply = _appSetting.Sign.Reply
-                            .Replace("{DoDoId}", eventBody.DodoId)
-                            .Replace("{IntegralName}", _appSetting.Sign.IntegralName)
-                            .Replace("{GetIntegral}", $"{_appSetting.Sign.GetIntegral}")
-                            .Replace("{Integral}", $"{integral}")
-                            .Replace("{SignCount}", $"{signCount}")
-                            .Replace("{SignTime}", $"{signTime}");
-
-                    }
-                    else
-                    {
-                        reply += "\n**签到失败**";
-                        reply += "\n您今天已经签到过了！";
-                    }
-                }
-                else if (content == _appSetting.Query.Command)//查询
-                {
-                    var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
-                    if (signTime > DateTime.MinValue)
-                    {
-                        var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
-                        var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
-
-                        reply = _appSetting.Query.Reply
-                            .Replace("{DoDoId}", eventBody.DodoId)
-                            .Replace("{NickName}", eventBody.Member.NickName)
-                            .Replace("{IntegralName}", _appSetting.Sign.IntegralName)
-                            .Replace("{Integral}", $"{integral}")
-                            .Replace("{SignCount}", $"{signCount}")
-                            .Replace("{SignTime}", $"{signTime}");
-                    }
-                    else
-                    {
-                        reply += "\n**查询失败**";
-                        reply += "\n您的账户为空，请先签到开户吧！";
-                    }
-                }
-                else if (content.StartsWith(_appSetting.Transfer.Command))//转账
-                {
-                    var matchResult = Regex.Match(content, $"{_appSetting.Transfer.Command}<@!(\\d+)>(\\d+)");
-
-                    var targetDoDoId = "";
-                    long transferIntegral = 0;
-
-                    if (matchResult.Groups.Count > 1)
-                    {
-                        targetDoDoId = matchResult.Groups[1].Value;
-                    }
-
-                    if (matchResult.Groups.Count > 2)
-                    {
-                        long.TryParse(matchResult.Groups[2].Value, out transferIntegral);
-                    }
-
-                    if (!string.IsNullOrEmpty(targetDoDoId) && transferIntegral > 0)
-                    {
-                        var signTime = DataHelper.ReadValue<string>(dataPath, eventBody.DodoId, "SignTime");
-
-                        if (signTime != "")
+                        var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
+                        if (signTime.Date != DateTime.Now.Date)
                         {
                             var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
-                            if (integral >= transferIntegral)
+                            var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
+
+                            integral += _appSetting.Sign.GetIntegral;
+                            signCount++;
+                            signTime = DateTime.Now;
+
+                            DataHelper.WriteValue(dataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
+                            DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
+                            DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignCount", signCount);
+                            DataHelper.WriteValue(dataPath, eventBody.DodoId, "SignTime", signTime);
+
+                            reply = _appSetting.Sign.Reply
+                                .Replace("{DoDoId}", eventBody.DodoId)
+                                .Replace("{IntegralName}", _appSetting.Sign.IntegralName)
+                                .Replace("{GetIntegral}", $"{_appSetting.Sign.GetIntegral}")
+                                .Replace("{Integral}", $"{integral}")
+                                .Replace("{SignCount}", $"{signCount}")
+                                .Replace("{SignTime}", $"{signTime}");
+
+                        }
+                        else
+                        {
+                            reply += "\n**签到失败**";
+                            reply += "\n您今天已经签到过了！";
+                        }
+                    }
+                    else if (content == _appSetting.Query.Command)//查询
+                    {
+                        var signTime = DataHelper.ReadValue<DateTime>(dataPath, eventBody.DodoId, "SignTime");
+                        if (signTime > DateTime.MinValue)
+                        {
+                            var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
+                            var signCount = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "SignCount");
+
+                            reply = _appSetting.Query.Reply
+                                .Replace("{DoDoId}", eventBody.DodoId)
+                                .Replace("{NickName}", eventBody.Member.NickName)
+                                .Replace("{IntegralName}", _appSetting.Sign.IntegralName)
+                                .Replace("{Integral}", $"{integral}")
+                                .Replace("{SignCount}", $"{signCount}")
+                                .Replace("{SignTime}", $"{signTime}");
+                        }
+                        else
+                        {
+                            reply += "\n**查询失败**";
+                            reply += "\n您的账户为空，请先签到开户吧！";
+                        }
+                    }
+                    else if (content.StartsWith(_appSetting.Transfer.Command))//转账
+                    {
+                        var matchResult = Regex.Match(content, $"{_appSetting.Transfer.Command}<@!(\\d+)>(\\d+)");
+
+                        var targetDoDoId = "";
+                        long transferIntegral = 0;
+
+                        if (matchResult.Groups.Count > 1)
+                        {
+                            targetDoDoId = matchResult.Groups[1].Value;
+                        }
+
+                        if (matchResult.Groups.Count > 2)
+                        {
+                            long.TryParse(matchResult.Groups[2].Value, out transferIntegral);
+                        }
+
+                        if (!string.IsNullOrEmpty(targetDoDoId) && transferIntegral > 0)
+                        {
+                            var signTime = DataHelper.ReadValue<string>(dataPath, eventBody.DodoId, "SignTime");
+
+                            if (signTime != "")
                             {
-                                if (eventBody.DodoId != targetDoDoId)
+                                var integral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
+                                if (integral >= transferIntegral)
                                 {
-                                    var targetSignTime = DataHelper.ReadValue<string>(dataPath, targetDoDoId, "SignTime");
-                                    if (targetSignTime != "")
+                                    if (eventBody.DodoId != targetDoDoId)
                                     {
-                                        var targetIntegral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
+                                        var targetSignTime = DataHelper.ReadValue<string>(dataPath, targetDoDoId, "SignTime");
+                                        if (targetSignTime != "")
+                                        {
+                                            var targetIntegral = DataHelper.ReadValue<long>(dataPath, eventBody.DodoId, "Integral");
 
-                                        integral -= transferIntegral;
-                                        DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
-                                        targetIntegral += transferIntegral;
-                                        DataHelper.WriteValue(dataPath, targetDoDoId, "Integral", targetIntegral);
+                                            integral -= transferIntegral;
+                                            DataHelper.WriteValue(dataPath, eventBody.DodoId, "Integral", integral);
+                                            targetIntegral += transferIntegral;
+                                            DataHelper.WriteValue(dataPath, targetDoDoId, "Integral", targetIntegral);
 
-                                        reply = _appSetting.Transfer.Reply
-                                            .Replace("{DoDoId}", eventBody.DodoId)
-                                            .Replace("{NickName}", eventBody.Member.NickName)
-                                            .Replace("{TargetDoDoId}", $"{targetDoDoId}")
-                                            .Replace("{TransferIntegral}", $"{transferIntegral}")
-                                            .Replace("{IntegralName}", _appSetting.Sign.IntegralName);
+                                            reply = _appSetting.Transfer.Reply
+                                                .Replace("{DoDoId}", eventBody.DodoId)
+                                                .Replace("{NickName}", eventBody.Member.NickName)
+                                                .Replace("{TargetDoDoId}", $"{targetDoDoId}")
+                                                .Replace("{TransferIntegral}", $"{transferIntegral}")
+                                                .Replace("{IntegralName}", _appSetting.Sign.IntegralName);
+                                        }
+                                        else
+                                        {
+                                            reply += "\n**转账失败**";
+                                            reply += "\n未查询到对方的账户信息，请先邀请对方签到开户吧！";
+                                        }
                                     }
                                     else
                                     {
                                         reply += "\n**转账失败**";
-                                        reply += "\n未查询到对方的账户信息，请先邀请对方签到开户吧！";
+                                        reply += "\n转账对象不能是自己！";
                                     }
                                 }
                                 else
                                 {
                                     reply += "\n**转账失败**";
-                                    reply += "\n转账对象不能是自己！";
+                                    reply += $"\n您的账户余额不足{transferIntegral}{_appSetting.Sign.IntegralName}！";
                                 }
                             }
                             else
                             {
                                 reply += "\n**转账失败**";
-                                reply += $"\n您的账户余额不足{transferIntegral}{_appSetting.Sign.IntegralName}！";
+                                reply += "\n未查询到您的账户信息，请先签到！";
                             }
                         }
                         else
                         {
                             reply += "\n**转账失败**";
-                            reply += "\n未查询到您的账户信息，请先签到！";
+                            reply += "\n您发送的指令格式有误！";
                         }
                     }
-                    else
-                    {
-                        reply += "\n**转账失败**";
-                        reply += "\n您发送的指令格式有误！";
-                    }
-                }
 
-                #endregion
+                    #endregion
 
-                if (reply != defaultReply)
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
+                    if (reply != defaultReply)
                     {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {
-                            Content = reply
-                        }
-                    });
+                            ChannelId = eventBody.ChannelId,
+                            MessageBody = new MessageBodyText
+                            {
+                                Content = reply
+                            }
+                        });
+                    }
+
                 }
-
             }
-
+            catch (Exception e)
+            {
+                Exception(e.Message);
+            }
         }
     }
 }

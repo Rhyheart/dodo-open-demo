@@ -2,9 +2,7 @@
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
-using DoDo.Open.Sdk.Models.Members;
 using DoDo.Open.Sdk.Models.Messages;
-using DoDo.Open.Sdk.Models.Personals;
 using DoDo.Open.Sdk.Models.Roles;
 using DoDo.Open.Sdk.Services;
 
@@ -134,55 +132,63 @@ namespace DoDo.Open.RoleReceive
 
         public override async void MessageReactionEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyMessageReaction>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            #region 身份组领取
-
-            //校验当前反应的消息是否为配置的身份组领取消息
-            if (_appSetting.MessageId == eventBody.ReactionTarget.Id)
+            try
             {
-                //筛选当前反应的表情对应的规则列表
-                var ruleList = _appSetting.RuleList.Where(x => $"{char.ConvertToUtf32(x.Emoji, 0)}" == eventBody.ReactionEmoji.Id).ToList();
+                var eventBody = input.Data.EventBody;
 
-                //根据规则列表赋予用户相应身份组
-                foreach (var item in ruleList)
+                #region 身份组领取
+
+                //校验当前反应的消息是否为配置的身份组领取消息
+                if (_appSetting.MessageId == eventBody.ReactionTarget.Id)
                 {
-                    try
-                    {
-                        if (eventBody.ReactionType == 1)
-                        {
-                            await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
-                            {
-                                IslandId = eventBody.IslandId,
-                                DodoId = eventBody.DodoId,
-                                RoleId = item.RoleId
-                            }, true);
-                        }
-                        else
-                        {
-                            await _openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
-                            {
-                                IslandId = eventBody.IslandId,
-                                DodoId = eventBody.DodoId,
-                                RoleId = item.RoleId
-                            }, true);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        //若身份组赋予失败，则取消他此时反应的表情
-                        await _openApiService.SetChannelMessageReactionRemoveAsync(new SetChannelMessageReactionRemoveInput
-                        {
-                            MessageId = _appSetting.MessageId,
-                            Emoji = eventBody.ReactionEmoji,
-                            DodoId = eventBody.DodoId
-                        });
-                    }
-                }
-                
-            }
+                    //筛选当前反应的表情对应的规则列表
+                    var ruleList = _appSetting.RuleList.Where(x => $"{char.ConvertToUtf32(x.Emoji, 0)}" == eventBody.ReactionEmoji.Id).ToList();
 
-            #endregion
+                    //根据规则列表赋予用户相应身份组
+                    foreach (var item in ruleList)
+                    {
+                        try
+                        {
+                            if (eventBody.ReactionType == 1)
+                            {
+                                await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
+                                {
+                                    IslandId = eventBody.IslandId,
+                                    DodoId = eventBody.DodoId,
+                                    RoleId = item.RoleId
+                                }, true);
+                            }
+                            else
+                            {
+                                await _openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
+                                {
+                                    IslandId = eventBody.IslandId,
+                                    DodoId = eventBody.DodoId,
+                                    RoleId = item.RoleId
+                                }, true);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            //若身份组赋予失败，则取消他此时反应的表情
+                            await _openApiService.SetChannelMessageReactionRemoveAsync(new SetChannelMessageReactionRemoveInput
+                            {
+                                MessageId = _appSetting.MessageId,
+                                Emoji = eventBody.ReactionEmoji,
+                                DodoId = eventBody.DodoId
+                            });
+                        }
+                    }
+
+                }
+
+                #endregion
+
+            }
+            catch (Exception e)
+            {
+                Exception(e.Message);
+            }
 
         }
     }

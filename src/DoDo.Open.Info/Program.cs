@@ -25,7 +25,7 @@ var openApiService = new OpenApiService(new OpenApiOptions
     }
 });
 
-#region 群基础信息获取
+#region 基础信息
 
 try
 {

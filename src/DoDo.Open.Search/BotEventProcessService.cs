@@ -48,39 +48,46 @@ namespace DoDo.Open.Search
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            #region 检索
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var defaultReply = $"<@!{eventBody.DodoId}>";
-                var reply = defaultReply;
+                var eventBody = input.Data.EventBody;
 
-                var rule = _appSetting.RuleList.FirstOrDefault(x => Regex.IsMatch(content, $"{x.Command}(.*)"));
-                if (rule != null)
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    var matchResult = Regex.Match(content, $"{rule.Command}(.*)");
-                    reply = rule.Reply
-                        .Replace("{DoDoId}",eventBody.DodoId)
-                        .Replace("{KeyWord}", UrlEncoder.Default.Encode(matchResult.Groups[1].Value));
-                }
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var reply = defaultReply;
 
-                #endregion
+                    #region 检索
 
-                if (reply != defaultReply)
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
+                    var rule = _appSetting.RuleList.FirstOrDefault(x => Regex.IsMatch(content, $"{x.Command}(.*)"));
+                    if (rule != null)
                     {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
-                        {
-                            Content = reply
-                        }
-                    });
-                }
+                        var matchResult = Regex.Match(content, $"{rule.Command}(.*)");
+                        reply = rule.Reply
+                            .Replace("{DoDoId}", eventBody.DodoId)
+                            .Replace("{KeyWord}", UrlEncoder.Default.Encode(matchResult.Groups[1].Value));
+                    }
 
+                    #endregion
+
+                    if (reply != defaultReply)
+                    {
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
+                        {
+                            ChannelId = eventBody.ChannelId,
+                            MessageBody = new MessageBodyText
+                            {
+                                Content = reply
+                            }
+                        });
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Exception(e.Message);
             }
 
         }

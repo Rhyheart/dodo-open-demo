@@ -80,7 +80,7 @@ namespace DoDo.Open.LuckDraw.Services
                                     text = new
                                     {
                                         type = "dodo-md",
-                                        content = $"恭喜[{dodoId}][{DataHelper.ReadValue<string>(memberDataPath, dodoId, "NickName")}]获得本次大奖！"
+                                        content = $"恭喜 [ {dodoId} ] [ {DataHelper.ReadValue<string>(memberDataPath, dodoId, "NickName")} ] 获得本次大奖！"
                                     }
                                 });
 

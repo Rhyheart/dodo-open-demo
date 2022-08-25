@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
+﻿using System.Text.RegularExpressions;
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
@@ -68,35 +64,37 @@ namespace DoDo.Open.LuckDraw
 
         public override async void ChannelMessageEvent<T>(EventSubjectOutput<EventSubjectDataBusiness<EventBodyChannelMessage<T>>> input)
         {
-            var eventBody = input.Data.EventBody;
-
-            if (eventBody.MessageBody is MessageBodyText messageBodyText)
+            try
             {
-                var content = messageBodyText.Content.Replace(" ", "");
-                var defaultReply = $"<@!{eventBody.DodoId}>";
-                var reply = defaultReply;
+                var eventBody = input.Data.EventBody;
 
-                #region 抽奖
-
-                var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
-                var memberDataPath = $"{Environment.CurrentDirectory}\\data\\member\\{eventBody.IslandId}.txt";
-
-                if (Regex.IsMatch(content, "^发起抽奖$"))
+                if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
-                    var cardEndTime = DateTime.Now.AddMinutes(1).GetTimeStamp();
+                    var content = messageBodyText.Content.Replace(" ", "");
+                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var reply = defaultReply;
 
-                    var card = new Card
-                    {
-                        Type = "card",
-                        Title = "发起抽奖",
-                        Theme = "default",
-                        Components = new List<object>()
-                    };
+                    #region 抽奖
 
-                    card.Components.Add(new
+                    var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
+                    var memberDataPath = $"{Environment.CurrentDirectory}\\data\\member\\{eventBody.IslandId}.txt";
+
+                    if (Regex.IsMatch(content, "^发起抽奖$"))
                     {
-                        type = "remark",
-                        elements = new List<object>
+                        var cardEndTime = DateTime.Now.AddMinutes(1).GetTimeStamp();
+
+                        var card = new Card
+                        {
+                            Type = "card",
+                            Title = "发起抽奖",
+                            Theme = "default",
+                            Components = new List<object>()
+                        };
+
+                        card.Components.Add(new
+                        {
+                            type = "remark",
+                            elements = new List<object>
                         {
                             new
                             {
@@ -109,22 +107,22 @@ namespace DoDo.Open.LuckDraw
                                 content = eventBody.Member.NickName
                             }
                         }
-                    });
+                        });
 
-                    card.Components.Add(new
-                    {
-                        type = "section",
-                        text = new
+                        card.Components.Add(new
                         {
-                            type = "dodo-md",
-                            content = $"[{eventBody.DodoId}][{eventBody.Member.NickName}]发起的抽奖。"
-                        }
-                    });
+                            type = "section",
+                            text = new
+                            {
+                                type = "dodo-md",
+                                content = $"[{eventBody.DodoId}][{eventBody.Member.NickName}]发起的抽奖。"
+                            }
+                        });
 
-                    card.Components.Add(new
-                    {
-                        type = "button-group",
-                        elements = new List<object>
+                        card.Components.Add(new
+                        {
+                            type = "button-group",
+                            elements = new List<object>
                         {
                             new
                             {
@@ -166,50 +164,54 @@ namespace DoDo.Open.LuckDraw
                                 }
                             }
                         }
-                    });
+                        });
 
-                    card.Components.Add(new
+                        card.Components.Add(new
+                        {
+                            type = "countdown",
+                            title = "发起抽奖时，倒计时10分钟结束后失效",
+                            style = "hour",
+                            endTime = cardEndTime
+                        });
+
+                        var setChannelMessageSendOutput = await _openApiService.SetChannelMessageSendAsync(
+                            new SetChannelMessageSendInput<MessageBodyCard>
+                            {
+                                ChannelId = eventBody.ChannelId,
+                                MessageBody = new MessageBodyCard
+                                {
+                                    Card = card
+                                }
+                            }, true);
+
+                        DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Status", 1);
+                        DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "EndTime", cardEndTime);
+                        DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Sponsor", eventBody.DodoId);
+                        DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
+                        DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "AvatarUrl", eventBody.Personal.AvatarUrl);
+
+                    }
+
+                    #endregion
+
+                    if (reply != defaultReply)
                     {
-                        type = "countdown",
-                        title = "发起抽奖时，倒计时10分钟结束后失效",
-                        style = "hour",
-                        endTime = cardEndTime
-                    });
-
-                    var setChannelMessageSendOutput = await _openApiService.SetChannelMessageSendAsync(
-                        new SetChannelMessageSendInput<MessageBodyCard>
+                        await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {
                             ChannelId = eventBody.ChannelId,
-                            MessageBody = new MessageBodyCard
+                            MessageBody = new MessageBodyText
                             {
-                                Card = card
+                                Content = reply
                             }
-                        }, true);
-
-                    DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Status", 1);
-                    DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "EndTime", cardEndTime);
-                    DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Sponsor", eventBody.DodoId);
-                    DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
-                    DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "AvatarUrl", eventBody.Personal.AvatarUrl);
+                        });
+                    }
 
                 }
-
-                #endregion
-
-                if (reply != defaultReply)
-                {
-                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
-                    {
-                        ChannelId = eventBody.ChannelId,
-                        MessageBody = new MessageBodyText
-                        {
-                            Content = reply
-                        }
-                    });
-                }
-
             }
-
+            catch (Exception e)
+            {
+                Exception(e.Message);
+            }
         }
 
         public override async void CardMessageButtonClickEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyCardMessageButtonClick>> input)
@@ -337,8 +339,6 @@ namespace DoDo.Open.LuckDraw
             {
                 Exception(e.Message);
             }
-
-
         }
 
         public override async void CardMessageFormSubmitEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyCardMessageFormSubmit>> input)

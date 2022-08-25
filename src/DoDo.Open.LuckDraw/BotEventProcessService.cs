@@ -75,7 +75,7 @@ namespace DoDo.Open.LuckDraw
 
                 #region 抽奖
 
-                if (Regex.IsMatch(content, "发起抽奖"))
+                if (Regex.IsMatch(content, "^发起抽奖$"))
                 {
                     var card = new Card
                     {
@@ -166,6 +166,182 @@ namespace DoDo.Open.LuckDraw
                         title = "发起抽奖时，倒计时10分钟结束后失效",
                         style = "hour",
                         endTime = DateTime.Now.AddMinutes(10).GetTimeStamp()
+                    });
+
+                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyCard>
+                    {
+                        ChannelId = eventBody.ChannelId,
+                        MessageBody = new MessageBodyCard
+                        {
+                            Card = card
+                        }
+                    });
+                }
+                else if (Regex.IsMatch(content, "^抽奖$"))
+                {
+                    var card = new Card
+                    {
+                        Type = "card",
+                        Title = "抽奖",
+                        Theme = "green",
+                        Components = new List<object>()
+                    };
+
+                    card.Components.Add(new
+                    {
+                        type = "section",
+                        text = new
+                        {
+                            type = "dodo-md",
+                            content = $"500个字符。"
+                        }
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "divider"
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "remark",
+                        elements = new List<object>
+                        {
+                            new
+                            {
+                                type = "image",
+                                src = eventBody.Personal.AvatarUrl
+                            },
+                            new
+                            {
+                                type = "dodo-md",
+                                content = eventBody.Member.NickName
+                            },
+                            new
+                            {
+                                type = "image",
+                                src = eventBody.Personal.AvatarUrl
+                            },
+                            new
+                            {
+                                type = "dodo-md",
+                                content = eventBody.Member.NickName
+                            }
+                        }
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "divider"
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "countdown",
+                        title = "抽奖倒计时：",
+                        style = "hour",
+                        endTime = DateTime.Now.AddMinutes(10).GetTimeStamp()
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "button-group",
+                        elements = new List<object>
+                        {
+                            new
+                            {
+                                type = "button",
+                                interactCustomId = "交互自定义id4",
+                                click = new
+                                {
+                                    action = "call_back",
+                                    value = "回传参数"
+                                },
+                                color = "green",
+                                name = "每人只能点击一次，点击此处参与抽奖"
+                            }
+                        }
+                    });
+
+                    await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyCard>
+                    {
+                        ChannelId = eventBody.ChannelId,
+                        MessageBody = new MessageBodyCard
+                        {
+                            Card = card
+                        }
+                    });
+                }
+                else if (Regex.IsMatch(content, "^抽奖结束$"))
+                {
+                    var card = new Card
+                    {
+                        Type = "card",
+                        Title = "抽奖结束",
+                        Theme = "default",
+                        Components = new List<object>()
+                    };
+
+                    card.Components.Add(new
+                    {
+                        type = "section",
+                        text = new
+                        {
+                            type = "dodo-md",
+                            content = $"500个字符。"
+                        }
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "divider"
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "section",
+                        text = new
+                        {
+                            type = "dodo-md",
+                            content = $"恭喜[{eventBody.DodoId}][{eventBody.Member.NickName}]获得本次大奖。"
+                        }
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "image-group",
+                        elements = new List<object>
+                        {
+                            new
+                            {
+                                type = "image",
+                                src = eventBody.Personal.AvatarUrl
+                            }
+                        }
+                    });
+
+                    card.Components.Add(new
+                    {
+                        type = "divider"
+                    });
+
+
+                    card.Components.Add(new
+                    {
+                        type = "remark",
+                        elements = new List<object>
+                        {
+                            new
+                            {
+                                type = "image",
+                                src = eventBody.Personal.AvatarUrl
+                            },
+                            new
+                            {
+                                type = "dodo-md",
+                                content = eventBody.Member.NickName
+                            }
+                        }
                     });
 
                     await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyCard>

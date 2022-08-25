@@ -75,11 +75,17 @@ namespace DoDo.Open.LuckDraw
 
                 #region 抽奖
 
-                if (Regex.IsMatch(content, _appSetting.LuckDraw.Command))
+                if (Regex.IsMatch(content, "发起抽奖"))
                 {
-                    var components = new List<object>();
+                    var card = new Card
+                    {
+                        Type = "card",
+                        Title = "发起抽奖",
+                        Theme = "default",
+                        Components = new List<object>()
+                    };
 
-                    components.Add(new
+                    card.Components.Add(new
                     {
                         type = "remark",
                         elements = new List<object>
@@ -87,27 +93,27 @@ namespace DoDo.Open.LuckDraw
                             new
                             {
                                 type = "image",
-                                src = "https://img.imdodo.com/upload/cdn/4803E0BBF8678A657EBD762D7AC45710_1660189645624.png"
+                                src = eventBody.Personal.AvatarUrl
                             },
                             new
                             {
                                 type = "dodo-md",
-                                content = "群昵称"
+                                content = eventBody.Member.NickName
                             }
                         }
                     });
 
-                    components.Add(new
+                    card.Components.Add(new
                     {
                         type = "section",
                         text = new
                         {
                             type = "dodo-md",
-                            content = "[DoDo号][昵称]发起的抽奖。"
+                            content = $"[{eventBody.DodoId}][{eventBody.Member.NickName}]发起的抽奖。"
                         }
                     });
 
-                    components.Add(new
+                    card.Components.Add(new
                     {
                         type = "button-group",
                         elements = new List<object>
@@ -154,12 +160,12 @@ namespace DoDo.Open.LuckDraw
                         }
                     });
 
-                    components.Add(new
+                    card.Components.Add(new
                     {
                         type = "countdown",
                         title = "发起抽奖时，倒计时10分钟结束后失效",
                         style = "hour",
-                        endTime = 1661326563341
+                        endTime = DateTime.Now.AddMinutes(10).GetTimeStamp()
                     });
 
                     await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyCard>
@@ -167,13 +173,7 @@ namespace DoDo.Open.LuckDraw
                         ChannelId = eventBody.ChannelId,
                         MessageBody = new MessageBodyCard
                         {
-                            Card = new Card
-                            {
-                                Type = "card",
-                                Title = "发起抽奖",
-                                Theme = "default",
-                                Components = components
-                            }
+                            Card = card
                         }
                     });
                 }

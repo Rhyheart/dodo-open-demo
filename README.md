@@ -343,7 +343,7 @@
 
 #### 项目地址
 
-[DoDo.Open.Solitaire](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.LuckDraw)
+[DoDo.Open.LuckDraw](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.LuckDraw)
 
 #### 项目介绍
 

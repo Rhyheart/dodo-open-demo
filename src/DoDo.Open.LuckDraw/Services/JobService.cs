@@ -23,57 +23,40 @@ namespace DoDo.Open.LuckDraw.Services
                     var messageIdList = DataHelper.ReadSections(filePath);
                     foreach (var messageId in messageIdList)
                     {
-                        var status = DataHelper.ReadValue<int>(luckDrawDataPath, messageId, "Status");
-                        var cardEndTime = DataHelper.ReadValue<long>(luckDrawDataPath, messageId, "EndTime");
-
-                        //卡片状态为填写中时，校验是否填写超时
-                        if (status == 1 && DateTime.Now.GetTimeStamp() >= cardEndTime)
+                        try
                         {
-                            await openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
-                            {
-                                MessageId = messageId,
-                                Reason = "抽奖内容填写超时"
-                            }, true);
+                            var status = DataHelper.ReadValue<int>(luckDrawDataPath, messageId, "Status");
+                            var cardEndTime = DataHelper.ReadValue<long>(luckDrawDataPath, messageId, "EndTime");
 
-                            DataHelper.DeleteSection(luckDrawDataPath, messageId);
-                        }
-                        //卡片状态为抽奖中时，校验是否抽奖结束，若结束，则从参与抽奖的用户中随机抽取一名幸运用户
-                        else if (status == 2 && DateTime.Now.GetTimeStamp() >= cardEndTime)
-                        {
-                            var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Content") ?? "").Replace("\\n", "\n");
-                            var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Participants") ?? "";
-                            var cardParticipantList = new List<string>();
-                            if (!string.IsNullOrWhiteSpace(cardParticipants))
+                            //卡片状态为填写中时，校验是否填写超时
+                            if (status == 1 && DateTime.Now.GetTimeStamp() >= cardEndTime)
                             {
-                                cardParticipantList = cardParticipants.Split("|").ToList();
-                            }
-
-                            var card = new Card
-                            {
-                                Type = "card",
-                                Title = "抽奖结束",
-                                Theme = "default",
-                                Components = new List<object>()
-                            };
-
-                            card.Components.Add(new
-                            {
-                                type = "section",
-                                text = new
+                                await openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
                                 {
-                                    type = "dodo-md",
-                                    content = cardContent
+                                    MessageId = messageId,
+                                    Reason = "抽奖内容填写超时"
+                                });
+
+                                DataHelper.DeleteSection(luckDrawDataPath, messageId);
+                            }
+                            //卡片状态为抽奖中时，校验是否抽奖结束，若结束，则从参与抽奖的用户中随机抽取一名幸运用户
+                            else if (status == 2 && DateTime.Now.GetTimeStamp() >= cardEndTime)
+                            {
+                                var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Content") ?? "").Replace("\\n", "\n");
+                                var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Participants") ?? "";
+                                var cardParticipantList = new List<string>();
+                                if (!string.IsNullOrWhiteSpace(cardParticipants))
+                                {
+                                    cardParticipantList = cardParticipants.Split("|").ToList();
                                 }
-                            });
 
-                            card.Components.Add(new
-                            {
-                                type = "divider"
-                            });
-
-                            if (cardParticipantList.Count > 0)
-                            {
-                                var dodoId = cardParticipantList[new Random().Next(0, cardParticipantList.Count)];
+                                var card = new Card
+                                {
+                                    Type = "card",
+                                    Title = "抽奖结束",
+                                    Theme = "default",
+                                    Components = new List<object>()
+                                };
 
                                 card.Components.Add(new
                                 {
@@ -81,21 +64,8 @@ namespace DoDo.Open.LuckDraw.Services
                                     text = new
                                     {
                                         type = "dodo-md",
-                                        content = $"恭喜 [ {dodoId} ] [ {DataHelper.ReadValue<string>(memberDataPath, dodoId, "NickName")} ] 获得本次大奖！"
+                                        content = cardContent
                                     }
-                                });
-
-                                card.Components.Add(new
-                                {
-                                    type = "image-group",
-                                    elements = new List<object>
-                                 {
-                                    new
-                                    {
-                                        type = "image",
-                                        src = DataHelper.ReadValue<string>(memberDataPath,dodoId,"AvatarUrl")
-                                    }
-                                }
                                 });
 
                                 card.Components.Add(new
@@ -103,56 +73,93 @@ namespace DoDo.Open.LuckDraw.Services
                                     type = "divider"
                                 });
 
-                                var remarkElements = new List<object>();
-
-                                foreach (var cardParticipant in cardParticipantList)
+                                if (cardParticipantList.Count > 0)
                                 {
-                                    remarkElements.Add(new
+                                    var dodoId = cardParticipantList[new Random().Next(0, cardParticipantList.Count)];
+
+                                    card.Components.Add(new
+                                    {
+                                        type = "section",
+                                        text = new
+                                        {
+                                            type = "dodo-md",
+                                            content = $"恭喜 [ {dodoId} ] [ {DataHelper.ReadValue<string>(memberDataPath, dodoId, "NickName")} ] 获得本次大奖！"
+                                        }
+                                    });
+
+                                    card.Components.Add(new
+                                    {
+                                        type = "image-group",
+                                        elements = new List<object>
+                                 {
+                                    new
                                     {
                                         type = "image",
-                                        src = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "AvatarUrl")
+                                        src = DataHelper.ReadValue<string>(memberDataPath,dodoId,"AvatarUrl")
+                                    }
+                                }
                                     });
-                                    remarkElements.Add(new
+
+                                    card.Components.Add(new
                                     {
-                                        type = "dodo-md",
-                                        content = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "NickName")
+                                        type = "divider"
+                                    });
+
+                                    var remarkElements = new List<object>();
+
+                                    foreach (var cardParticipant in cardParticipantList)
+                                    {
+                                        remarkElements.Add(new
+                                        {
+                                            type = "image",
+                                            src = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "AvatarUrl")
+                                        });
+                                        remarkElements.Add(new
+                                        {
+                                            type = "dodo-md",
+                                            content = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "NickName")
+                                        });
+                                    }
+
+                                    card.Components.Add(new
+                                    {
+                                        type = "remark",
+                                        elements = remarkElements
+                                    });
+                                }
+                                else
+                                {
+                                    card.Components.Add(new
+                                    {
+                                        type = "section",
+                                        text = new
+                                        {
+                                            type = "dodo-md",
+                                            content = "无人参与抽奖！"
+                                        }
                                     });
                                 }
 
-                                card.Components.Add(new
+                                await openApiService.SetChannelMessageEditAsync(new SetChannelMessageEditInput<MessageBodyCard>
                                 {
-                                    type = "remark",
-                                    elements = remarkElements
-                                });
-                            }
-                            else
-                            {
-                                card.Components.Add(new
-                                {
-                                    type = "section",
-                                    text = new
+                                    MessageId = messageId,
+                                    MessageBody = new MessageBodyCard
                                     {
-                                        type = "dodo-md",
-                                        content = "无人参与抽奖！"
+                                        Card = card
                                     }
                                 });
+
+                                //抽奖完毕后，将抽奖记录删除，防止定时任务重复判断
+                                DataHelper.DeleteSection(luckDrawDataPath, messageId);
+
+                                //由于卡片编辑接口限制1秒1次，因此这里调用完编辑接口延迟1秒钟，避免下次编辑失败
+                                Thread.Sleep(1000);
+
                             }
-
-                            await openApiService.SetChannelMessageEditAsync(new SetChannelMessageEditInput<MessageBodyCard>
-                            {
-                                MessageId = messageId,
-                                MessageBody = new MessageBodyCard
-                                {
-                                    Card = card
-                                }
-                            });
-
-                            //抽奖完毕后，将抽奖记录删除，防止定时任务重复判断
-                            DataHelper.DeleteSection(luckDrawDataPath, messageId);
-
-                            //由于卡片编辑接口限制1秒1次，因此这里调用完编辑接口延迟1秒钟，避免下次编辑失败
-                            Thread.Sleep(1000);
-
+                        }
+                        catch (Exception e)
+                        {
+                            // ignored
                         }
 
                     }

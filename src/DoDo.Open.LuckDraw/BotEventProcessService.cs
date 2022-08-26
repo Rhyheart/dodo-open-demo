@@ -24,16 +24,22 @@ namespace DoDo.Open.LuckDraw
             {
                 try
                 {
+                    #region 编辑抽奖卡片
+
                     var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{request.IslandId}.txt";
                     if (DataHelper.ReadValue<int>(luckDrawDataPath, request.MessageId, "status") == 2)
                     {
                         var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, request.MessageId, "Participants") ?? "";
+                        //必须是抽奖中且是最后一次抽奖请求，才会更新抽奖卡片状态
                         if (Regex.IsMatch(cardParticipants, $".*{request.DodoId}$"))
                         {
                             await _openApiService.SetChannelMessageEditAsync(request.Input);
+                            //由于卡片编辑接口限制1秒1次，因此这里调用完编辑接口延迟1秒钟，避免下次编辑失败
                             Thread.Sleep(1000);
                         }
-                    }
+                    } 
+
+                    #endregion
                 }
                 catch (Exception e)
                 {
@@ -105,13 +111,15 @@ namespace DoDo.Open.LuckDraw
                     var defaultReply = $"<@!{eventBody.DodoId}>";
                     var reply = defaultReply;
 
-                    #region 抽奖
+                    #region 发起抽奖
 
                     var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
                     var memberDataPath = $"{Environment.CurrentDirectory}\\data\\member\\{eventBody.IslandId}.txt";
 
                     if (content == "发起抽奖")
                     {
+                        //发起抽奖指令触发抽奖卡片发出
+
                         var cardEndTime = DateTime.Now.AddMinutes(10).GetTimeStamp();
 
                         var card = new Card
@@ -204,6 +212,7 @@ namespace DoDo.Open.LuckDraw
                             endTime = cardEndTime
                         });
 
+                        //发送卡片消息
                         var setChannelMessageSendOutput = await _openApiService.SetChannelMessageSendAsync(
                             new SetChannelMessageSendInput<MessageBodyCard>
                             {
@@ -214,6 +223,7 @@ namespace DoDo.Open.LuckDraw
                                 }
                             }, true);
 
+                        //记录卡片状态，1：填写中，2：抽奖中
                         DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Status", 1);
                         DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "EndTime", cardEndTime);
                         DataHelper.WriteValue(luckDrawDataPath, setChannelMessageSendOutput.MessageId, "Sponsor", eventBody.DodoId);
@@ -250,15 +260,17 @@ namespace DoDo.Open.LuckDraw
             {
                 var eventBody = input.Data.EventBody;
 
-                #region 抽奖
+                #region 参与抽奖
 
                 var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
                 var memberDataPath = $"{Environment.CurrentDirectory}\\data\\member\\{eventBody.IslandId}.txt";
 
+                //必须是抽奖中状态，用户才可参与抽奖
                 if (DataHelper.ReadValue<int>(luckDrawDataPath, eventBody.MessageId, "status") == 2)
                 {
                     var cardEndTime = DataHelper.ReadValue<long>(luckDrawDataPath, eventBody.MessageId, "EndTime");
 
+                    //必须在有效期内，用户才可参与抽奖
                     if (cardEndTime >= DateTime.Now.GetTimeStamp())
                     {
                         var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, eventBody.MessageId, "Content") ?? "").Replace("\\n", "\n");
@@ -269,6 +281,7 @@ namespace DoDo.Open.LuckDraw
                             cardParticipantList = cardParticipants.Split("|").ToList();
                         }
 
+                        //用户不可重复抽奖
                         if (!cardParticipantList.Contains(eventBody.DodoId))
                         {
                             cardParticipantList.Add(eventBody.DodoId);
@@ -355,6 +368,7 @@ namespace DoDo.Open.LuckDraw
                                 }
                             });
 
+                            //这里通过ActionBlock组件将并发执行转成顺序执行，防止并发修改导致卡片消息混乱
                             _actionBlock.Post(new ActionBlockModel
                             {
                                 IslandId = eventBody.IslandId,
@@ -388,14 +402,16 @@ namespace DoDo.Open.LuckDraw
             {
                 var eventBody = input.Data.EventBody;
 
-                #region 抽奖
+                #region 填写抽奖内容
 
                 var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
 
+                //抽奖状态必须是填写中且用户必须是抽奖发起人才允许更新抽奖内容
                 if (DataHelper.ReadValue<int>(luckDrawDataPath, eventBody.MessageId, "status") == 1 && DataHelper.ReadValue<string>(luckDrawDataPath, eventBody.MessageId, "Sponsor") == eventBody.DodoId)
                 {
                     var cardEndTime = DataHelper.ReadValue<long>(luckDrawDataPath, eventBody.MessageId, "EndTime");
 
+                    //抽奖内容必须在有效期内填写
                     if (cardEndTime >= DateTime.Now.GetTimeStamp())
                     {
                         var formDurationItem = eventBody.FormData.FirstOrDefault(x => x.Key == "duration")?.value ?? "";
@@ -470,6 +486,7 @@ namespace DoDo.Open.LuckDraw
                             }
                         }, true);
 
+                        //抽奖内容填写完毕后，将卡片状态更改为抽奖中
                         DataHelper.WriteValue(luckDrawDataPath, eventBody.MessageId, "Status", 2);
                         DataHelper.WriteValue(luckDrawDataPath, eventBody.MessageId, "EndTime", cardEndTime);
                         DataHelper.WriteValue(luckDrawDataPath, eventBody.MessageId, "Content", cardContent.Replace("\n", "\\n"));

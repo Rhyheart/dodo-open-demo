@@ -12,6 +12,8 @@ namespace DoDo.Open.LuckDraw.Services
 
             try
             {
+                #region 监控抽奖消息
+
                 var filePaths = Directory.GetFiles($"{Environment.CurrentDirectory}\\data\\luck_draw");
                 foreach (var filePath in filePaths)
                 {
@@ -24,6 +26,7 @@ namespace DoDo.Open.LuckDraw.Services
                         var status = DataHelper.ReadValue<int>(luckDrawDataPath, messageId, "Status");
                         var cardEndTime = DataHelper.ReadValue<long>(luckDrawDataPath, messageId, "EndTime");
 
+                        //卡片状态为填写中时，校验是否填写超时
                         if (status == 1 && DateTime.Now.GetTimeStamp() >= cardEndTime)
                         {
                             await openApiService.SetChannelMessageWithdrawAsync(new SetChannelMessageWithdrawInput
@@ -34,6 +37,7 @@ namespace DoDo.Open.LuckDraw.Services
 
                             DataHelper.DeleteSection(luckDrawDataPath, messageId);
                         }
+                        //卡片状态为抽奖中时，校验是否抽奖结束，若结束，则从参与抽奖的用户中随机抽取一名幸运用户
                         else if (status == 2 && DateTime.Now.GetTimeStamp() >= cardEndTime)
                         {
                             var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Content") ?? "").Replace("\\n", "\n");
@@ -143,14 +147,18 @@ namespace DoDo.Open.LuckDraw.Services
                                 }
                             });
 
+                            //抽奖完毕后，将抽奖记录删除，防止定时任务重复判断
                             DataHelper.DeleteSection(luckDrawDataPath, messageId);
 
+                            //由于卡片编辑接口限制1秒1次，因此这里调用完编辑接口延迟1秒钟，避免下次编辑失败
                             Thread.Sleep(1000);
-                          
+
                         }
 
                     }
-                }
+                } 
+
+                #endregion
             }
             catch (Exception)
             {

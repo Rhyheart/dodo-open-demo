@@ -336,3 +336,33 @@
 6、测试群内发送`发起接龙 内容`、`加入接龙`（需要回复指定接龙消息）、`退出接龙`（需要回复指定接龙消息）指令即可，所有违禁词均可通过修改配置文件实现自定义
 
 </details>
+
+
+<details>
+<summary>十一、抽奖机器人</summary>
+
+#### 项目地址
+
+[DoDo.Open.Solitaire](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.LuckDraw)
+
+#### 项目介绍
+
+本机器人项目用于实现抽奖功能，用户添加抽奖表单发起抽奖任务卡片，其他用户点击抽奖卡片按钮参与抽奖
+
+#### 使用步骤
+
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=11)
+
+1、创建机器人
+
+2、将机器人拉入测试群
+
+3、下载解压执行程序
+
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Solitaire/appsettings.json)
+
+5、启动程序
+
+6、测试群内发送`发起抽奖`指令即可
+
+</details>

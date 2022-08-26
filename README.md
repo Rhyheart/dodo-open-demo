@@ -359,7 +359,7 @@
 
 3、下载解压执行程序
 
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.Solitaire/appsettings.json)
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.LuckDraw/appsettings.json)
 
 5、启动程序
 

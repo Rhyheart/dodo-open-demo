@@ -1,8 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using DoDo.Open.Sdk.Models.Channels;
+﻿using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Messages;
-using DoDo.Open.Sdk.Models.Roles;
-using DoDo.Open.Sdk.Services;
 using Quartz;
 
 namespace DoDo.Open.LuckDraw.Services
@@ -39,7 +36,7 @@ namespace DoDo.Open.LuckDraw.Services
                         }
                         else if (status == 2 && DateTime.Now.GetTimeStamp() >= cardEndTime)
                         {
-                            var cardContent = DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Content") ?? "";
+                            var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Content") ?? "").Replace("\\n", "\n");
                             var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, messageId, "Participants") ?? "";
                             var cardParticipantList = new List<string>();
                             if (!string.IsNullOrWhiteSpace(cardParticipants))
@@ -144,9 +141,12 @@ namespace DoDo.Open.LuckDraw.Services
                                 {
                                     Card = card
                                 }
-                            },true);
+                            });
 
                             DataHelper.DeleteSection(luckDrawDataPath, messageId);
+
+                            Thread.Sleep(1000);
+                          
                         }
 
                     }

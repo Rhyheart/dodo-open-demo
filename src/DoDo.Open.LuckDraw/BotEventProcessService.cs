@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks.Dataflow;
 using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
@@ -12,12 +13,42 @@ namespace DoDo.Open.LuckDraw
         private readonly OpenApiService _openApiService;
         private readonly OpenApiOptions _openApiOptions;
         private readonly AppSetting _appSetting;
+        private readonly ActionBlock<ActionBlockModel> _actionBlock;
 
         public BotEventProcessService(OpenApiService openApiService, AppSetting appSetting)
         {
             _openApiService = openApiService;
             _openApiOptions = openApiService.GetBotOptions();
             _appSetting = appSetting;
+            _actionBlock = new ActionBlock<ActionBlockModel>(async request =>
+            {
+                try
+                {
+                    var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{request.IslandId}.txt";
+                    if (DataHelper.ReadValue<int>(luckDrawDataPath, request.MessageId, "status") == 2)
+                    {
+                        var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, request.MessageId, "Participants") ?? "";
+                        if (Regex.IsMatch(cardParticipants, $".*{request.DodoId}$"))
+                        {
+                            await _openApiService.SetChannelMessageEditAsync(request.Input);
+                            Thread.Sleep(1000);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Exception(e.Message);
+                }
+               
+            });
+        }
+
+        public class ActionBlockModel
+        {
+            public string IslandId { get; set; }
+            public string DodoId { get; set; }
+            public string MessageId { get; set; }
+            public SetChannelMessageEditInput<MessageBodyCard> Input { get; set; }
         }
 
         public override void Connected(string message)
@@ -79,7 +110,7 @@ namespace DoDo.Open.LuckDraw
                     var luckDrawDataPath = $"{Environment.CurrentDirectory}\\data\\luck_draw\\{eventBody.IslandId}.txt";
                     var memberDataPath = $"{Environment.CurrentDirectory}\\data\\member\\{eventBody.IslandId}.txt";
 
-                    if (Regex.IsMatch(content, "^发起抽奖$"))
+                    if (content == "发起抽奖")
                     {
                         var cardEndTime = DateTime.Now.AddMinutes(10).GetTimeStamp();
 
@@ -168,7 +199,7 @@ namespace DoDo.Open.LuckDraw
                         card.Components.Add(new
                         {
                             type = "countdown",
-                            title = "发起抽奖时，10分钟内未填写内容将结束",
+                            title = "发起抽奖时，10分钟内未填写将结束",
                             style = "hour",
                             endTime = cardEndTime
                         });
@@ -213,7 +244,7 @@ namespace DoDo.Open.LuckDraw
             }
         }
 
-        public override async void CardMessageButtonClickEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyCardMessageButtonClick>> input)
+        public override void CardMessageButtonClickEvent(EventSubjectOutput<EventSubjectDataBusiness<EventBodyCardMessageButtonClick>> input)
         {
             try
             {
@@ -230,7 +261,7 @@ namespace DoDo.Open.LuckDraw
 
                     if (cardEndTime >= DateTime.Now.GetTimeStamp())
                     {
-                        var cardContent = DataHelper.ReadValue<string>(luckDrawDataPath, eventBody.MessageId, "Content") ?? "";
+                        var cardContent = (DataHelper.ReadValue<string>(luckDrawDataPath, eventBody.MessageId, "Content") ?? "").Replace("\\n", "\n");
                         var cardParticipants = DataHelper.ReadValue<string>(luckDrawDataPath, eventBody.MessageId, "Participants") ?? "";
                         var cardParticipantList = new List<string>();
                         if (!string.IsNullOrWhiteSpace(cardParticipants))
@@ -241,97 +272,105 @@ namespace DoDo.Open.LuckDraw
                         if (!cardParticipantList.Contains(eventBody.DodoId))
                         {
                             cardParticipantList.Add(eventBody.DodoId);
+
+                            DataHelper.WriteValue(luckDrawDataPath, eventBody.MessageId, "Participants", string.Join("|", cardParticipantList));
+
                             DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
                             DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "AvatarUrl", eventBody.Personal.AvatarUrl);
-                        }
 
-                        var card = new Card
-                        {
-                            Type = "card",
-                            Title = "抽奖",
-                            Theme = "green",
-                            Components = new List<object>()
-                        };
-
-                        card.Components.Add(new
-                        {
-                            type = "section",
-                            text = new
+                            var card = new Card
                             {
-                                type = "dodo-md",
-                                content = cardContent
-                            }
-                        });
+                                Type = "card",
+                                Title = "抽奖",
+                                Theme = "green",
+                                Components = new List<object>()
+                            };
 
-                        card.Components.Add(new
-                        {
-                            type = "divider"
-                        });
-
-                        var remarkElements = new List<object>();
-
-                        foreach (var cardParticipant in cardParticipantList)
-                        {
-                            remarkElements.Add(new
+                            card.Components.Add(new
                             {
-                                type = "image",
-                                src = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "AvatarUrl")
-                            });
-                            remarkElements.Add(new
-                            {
-                                type = "dodo-md",
-                                content = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "NickName")
-                            });
-                        }
-
-                        card.Components.Add(new
-                        {
-                            type = "remark",
-                            elements = remarkElements
-                        });
-
-                        card.Components.Add(new
-                        {
-                            type = "divider"
-                        });
-
-                        card.Components.Add(new
-                        {
-                            type = "countdown",
-                            title = "抽奖倒计时",
-                            style = "hour",
-                            endTime = cardEndTime
-                        });
-
-                        card.Components.Add(new
-                        {
-                            type = "button-group",
-                            elements = new List<object>
-                            {
-                                new
+                                type = "section",
+                                text = new
                                 {
-                                    type = "button",
-                                    click = new
-                                    {
-                                        action = "call_back",
-                                        value = "回传参数"
-                                    },
-                                    color = "green",
-                                    name = "点击此处参与抽奖，每人只能点击一次"
+                                    type = "dodo-md",
+                                    content = cardContent
                                 }
-                            }
-                        });
+                            });
 
-                        await _openApiService.SetChannelMessageEditAsync(new SetChannelMessageEditInput<MessageBodyCard>
-                        {
-                            MessageId = eventBody.MessageId,
-                            MessageBody = new MessageBodyCard
+                            card.Components.Add(new
                             {
-                                Card = card
-                            }
-                        }, true);
+                                type = "divider"
+                            });
 
-                        DataHelper.WriteValue(luckDrawDataPath, eventBody.MessageId, "Participants", string.Join("|", cardParticipantList));
+                            var remarkElements = new List<object>();
+
+                            foreach (var cardParticipant in cardParticipantList)
+                            {
+                                remarkElements.Add(new
+                                {
+                                    type = "image",
+                                    src = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "AvatarUrl")
+                                });
+                                remarkElements.Add(new
+                                {
+                                    type = "dodo-md",
+                                    content = DataHelper.ReadValue<string>(memberDataPath, cardParticipant, "NickName")
+                                });
+                            }
+
+                            card.Components.Add(new
+                            {
+                                type = "remark",
+                                elements = remarkElements
+                            });
+
+                            card.Components.Add(new
+                            {
+                                type = "divider"
+                            });
+
+                            card.Components.Add(new
+                            {
+                                type = "countdown",
+                                title = "抽奖倒计时",
+                                style = "hour",
+                                endTime = cardEndTime
+                            });
+
+                            card.Components.Add(new
+                            {
+                                type = "button-group",
+                                elements = new List<object>
+                                {
+                                    new
+                                    {
+                                        type = "button",
+                                        click = new
+                                        {
+                                            action = "call_back",
+                                            value = "回传参数"
+                                        },
+                                        color = "green",
+                                        name = "点击此处参与抽奖，每人只能点击一次"
+                                    }
+                                }
+                            });
+
+                            _actionBlock.Post(new ActionBlockModel
+                            {
+                                IslandId = eventBody.IslandId,
+                                DodoId = eventBody.DodoId,
+                                MessageId = eventBody.MessageId,
+                                Input = new SetChannelMessageEditInput<MessageBodyCard>
+                                {
+                                    MessageId = eventBody.MessageId,
+                                    MessageBody = new MessageBodyCard
+                                    {
+                                        Card = card
+                                    }
+                                }
+                            });
+                        }
+
                     }
                 }
 

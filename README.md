@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://open.imdodo.com">
-    <img src="https://open.imdodo.com/hero.png" width="200" height="200" alt="dodo-open">
+    <img src="https://avatars.githubusercontent.com/u/96616694" width="200" height="200" alt="dodo-open">
   </a>
 </p>
 
@@ -339,7 +339,7 @@
 
 
 <details>
-<summary>十一、抽奖机器人</summary>
+<summary>十一、[ 卡片 ] 抽奖机器人</summary>
 
 #### 项目地址
 
@@ -351,7 +351,7 @@
 
 #### 使用步骤
 
-0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=11)
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
 
 1、创建机器人
 

@@ -414,7 +414,7 @@ namespace DoDo.Open.LuckDraw
                     //抽奖内容必须在有效期内填写
                     if (cardEndTime >= DateTime.Now.GetTimeStamp())
                     {
-                        var formDurationItem = eventBody.FormData.FirstOrDefault(x => x.Key == "duration")?.value ?? "";
+                        var formDurationItem = eventBody.FormData.FirstOrDefault(x => x.Key == "duration")?.Value ?? "";
                         int.TryParse(formDurationItem, out var formDuration);
                         if (formDuration > 6000)
                         {
@@ -425,7 +425,7 @@ namespace DoDo.Open.LuckDraw
                             formDuration = 10;
                         }
                         cardEndTime = DateTime.Now.AddMinutes(formDuration).GetTimeStamp();
-                        var cardContent = eventBody.FormData.FirstOrDefault(x => x.Key == "content")?.value ?? "";
+                        var cardContent = eventBody.FormData.FirstOrDefault(x => x.Key == "content")?.Value ?? "";
 
                         var card = new Card
                         {

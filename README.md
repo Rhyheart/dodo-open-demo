@@ -339,7 +339,7 @@
 
 
 <details>
-<summary>十一、抽奖机器人[卡片]</summary>
+<summary>十一、[ 卡片 ] 抽奖机器人</summary>
 
 #### 项目地址
 

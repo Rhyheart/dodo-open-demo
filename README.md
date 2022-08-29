@@ -351,7 +351,7 @@
 
 #### 使用步骤
 
-0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=11)
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
 
 1、创建机器人
 

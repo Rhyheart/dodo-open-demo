@@ -50,7 +50,7 @@ namespace DoDo.Open.LuckDraw.Services
                                     cardParticipantList = cardParticipants.Split("|").ToList();
                                 }
 
-                                var card = new Card
+                                var card = new MessageModelCard
                                 {
                                     Type = "card",
                                     Title = "抽奖结束",

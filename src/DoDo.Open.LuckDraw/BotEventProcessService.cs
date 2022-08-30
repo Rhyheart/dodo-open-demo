@@ -122,7 +122,7 @@ namespace DoDo.Open.LuckDraw
 
                         var cardEndTime = DateTime.Now.AddMinutes(10).GetTimeStamp();
 
-                        var card = new Card
+                        var card = new MessageModelCard
                         {
                             Type = "card",
                             Title = "发起抽奖",
@@ -291,7 +291,7 @@ namespace DoDo.Open.LuckDraw
                             DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "NickName", eventBody.Member.NickName);
                             DataHelper.WriteValue(memberDataPath, eventBody.DodoId, "AvatarUrl", eventBody.Personal.AvatarUrl);
 
-                            var card = new Card
+                            var card = new MessageModelCard
                             {
                                 Type = "card",
                                 Title = "抽奖",
@@ -427,7 +427,7 @@ namespace DoDo.Open.LuckDraw
                         cardEndTime = DateTime.Now.AddMinutes(formDuration).GetTimeStamp();
                         var cardContent = eventBody.FormData.FirstOrDefault(x => x.Key == "content")?.Value ?? "";
 
-                        var card = new Card
+                        var card = new MessageModelCard
                         {
                             Type = "card",
                             Title = "抽奖",

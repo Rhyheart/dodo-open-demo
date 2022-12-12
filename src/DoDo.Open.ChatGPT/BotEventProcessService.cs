@@ -70,7 +70,8 @@ namespace DoDo.Open.ChatGPT
                 if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
                     var content = messageBodyText.Content.Replace(" ", "");
-                    var reply = "";
+                    var defaultReply = $"<@!{eventBody.DodoSourceId}> ";
+                    var reply = defaultReply;
 
                     #region ChatGPT
 
@@ -196,7 +197,7 @@ namespace DoDo.Open.ChatGPT
 
                     #endregion
 
-                    if (reply != "")
+                    if (reply != defaultReply)
                     {
                         await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>
                         {

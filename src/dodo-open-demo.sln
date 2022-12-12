@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.Solitaire", "DoDo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.AgingRole", "DoDo.Open.AgingRole\DoDo.Open.AgingRole.csproj", "{A8E6B41F-90B9-4411-A49A-F701BCBF3BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.LuckDraw", "DoDo.Open.LuckDraw\DoDo.Open.LuckDraw.csproj", "{1C9C97BB-83AF-489F-B12B-81B1E347854E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoDo.Open.LuckDraw", "DoDo.Open.LuckDraw\DoDo.Open.LuckDraw.csproj", "{1C9C97BB-83AF-489F-B12B-81B1E347854E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoDo.Open.ChatGPT", "DoDo.Open.ChatGPT\DoDo.Open.ChatGPT.csproj", "{4A5D9D9A-69E9-453F-93C5-FFEAD4F99028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C9C97BB-83AF-489F-B12B-81B1E347854E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5D9D9A-69E9-453F-93C5-FFEAD4F99028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5D9D9A-69E9-453F-93C5-FFEAD4F99028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5D9D9A-69E9-453F-93C5-FFEAD4F99028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5D9D9A-69E9-453F-93C5-FFEAD4F99028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

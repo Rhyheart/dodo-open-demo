@@ -13,22 +13,27 @@
         public string Token { get; set; }
 
         /// <summary>
-        /// 规则列表
+        /// ChatGPT配置
         /// </summary>
-        public List<Rule> RuleList { get; set; }
+        public ChatGPTConfig ChatGPTConfig { get; set; }
     }
 
-    public class Rule
+    public class ChatGPTConfig
     {
         /// <summary>
-        /// 关键词，支持正则匹配
+        /// Token
         /// </summary>
-        public string KeyWord { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
-        /// 回复
+        /// 最大Token数
         /// </summary>
-        public string Reply { get; set; }
+        public string MaxTokens { get; set; }
+
+        /// <summary>
+        /// 语言模型
+        /// </summary>
+        public string Model { get; set; }
     }
 
 }

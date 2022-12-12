@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using DoDo.Open.Sdk.Models;
+﻿using DoDo.Open.Sdk.Models;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Messages;
@@ -58,14 +57,8 @@ namespace DoDo.Open.ChatGPT
 
                     #region 关键词回复
 
-                    //获取匹配到的规则列表
-                    var matchRuleList = _appSetting.RuleList.Where(x => Regex.IsMatch(content, x.KeyWord)).ToList();
+                    reply = _appSetting.ChatGPTConfig.Model;
 
-                    if (matchRuleList.Count > 0)
-                    {
-                        //从匹配规则列表中随机获取一条规则回复
-                        reply = matchRuleList[new Random().Next(0, matchRuleList.Count)].Reply;
-                    }
 
                     #endregion
 

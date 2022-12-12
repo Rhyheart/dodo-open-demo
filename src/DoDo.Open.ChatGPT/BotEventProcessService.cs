@@ -75,11 +75,17 @@ namespace DoDo.Open.ChatGPT
 
                     var sectionList = DataHelper.ReadSections(dataPath)
                         .Select(x => Convert.ToInt64(x))
-                        .OrderBy(x => x)
+                        .OrderByDescending(x => x)
                         .Select(x => Convert.ToString(x))
                         .ToList();
 
+                    var setKeyWord = content;
+
+                    var maxTokens = 1500;
+
                     var messageBuilder = new StringBuilder();
+
+                    messageBuilder.Append($"\n{eventBody.DodoSourceId}:{setKeyWord}");
 
                     for (var i = 0; i < sectionList.Count; i++)
                     {
@@ -87,19 +93,24 @@ namespace DoDo.Open.ChatGPT
                         var getKeyWord = DataHelper.ReadValue<string>(dataPath, section, "KeyWord");
                         var getReply = DataHelper.ReadValue<string>(dataPath, section, "Reply").Replace("\\n", "\n");
 
-                        messageBuilder.Append($"\n{eventBody.DodoSourceId}:{getKeyWord}");
-                        messageBuilder.Append($"\nAi:{getReply}");
-
-                        if (i >= 10)
+                        if (getReply.Length > 500)
                         {
-                            DataHelper.DeleteSection(dataPath, sectionList[i - 10]);
+                            getReply = getReply.Substring(0, 500);
+                        }
+
+                        var tempMessage = $"\n{eventBody.DodoSourceId}:{getKeyWord}\nAi:{getReply}";
+
+                        if (messageBuilder.Length + tempMessage.Length < 4000 - maxTokens)
+                        {
+                            messageBuilder.Insert(0, tempMessage);
+                        }
+
+                        if (i >= 20)
+                        {
+                            DataHelper.DeleteSection(dataPath, sectionList[i]);
                         }
 
                     }
-
-                    var setKeyWord = content;
-
-                    messageBuilder.Append($"\n{eventBody.DodoSourceId}:{setKeyWord}");
 
                     var client = new RestClient();
 
@@ -118,11 +129,10 @@ namespace DoDo.Open.ChatGPT
                         model = _appSetting.ChatGPTConfig.Model,
                         prompt = $"{messageBuilder}",
                         temperature = 0.9,
-                        max_tokens = _appSetting.ChatGPTConfig.MaxTokens,
+                        max_tokens = maxTokens,
                         top_p = 1,
                         frequency_penalty = 0,
-                        presence_penalty = 0.6,
-                        stop = new[] {$"{eventBody.DodoSourceId}:"}
+                        presence_penalty = 0.6
                     };
 
                     request.AddJsonBody(json);
@@ -130,6 +140,7 @@ namespace DoDo.Open.ChatGPT
                     _openApiOptions.Log?.Invoke($"ChatGPT-Request: {JsonSerializer.Serialize(json, jsonSerializerOptions)}");
 
                     var setReply = "";
+
                     try
                     {
                         var response = client.Post<ChatGPTOutput>(request);
@@ -140,20 +151,22 @@ namespace DoDo.Open.ChatGPT
                     }
                     catch (Exception e)
                     {
-                        setReply = "让我休息会吧~";
+                        // ignored
                     }
 
-                    if(string.IsNullOrWhiteSpace(setReply))
+                    if (!string.IsNullOrWhiteSpace(setReply))
                     {
-                        setReply = "让我休息会吧~";
+                        reply += setReply;
+
+                        var setSection = DateTime.Now.ToString("yyyyMMddhhmmss");
+
+                        DataHelper.WriteValue(dataPath, setSection, "KeyWord", setKeyWord);
+                        DataHelper.WriteValue(dataPath, setSection, "Reply", setReply.Replace("\n", ""));
                     }
-
-                    reply += setReply;
-
-                    var setSection = DateTime.Now.ToString("yyyyMMddhhmmss");
-
-                    DataHelper.WriteValue(dataPath, setSection, "KeyWord", setKeyWord);
-                    DataHelper.WriteValue(dataPath, setSection, "Reply", setReply.Replace("\n", ""));
+                    else
+                    {
+                        reply += "让我休息会吧~";
+                    }
 
                     #endregion
 

@@ -62,18 +62,18 @@ namespace DoDo.Open.AgingRole
             try
             {
                 var eventBody = input.Data.EventBody;
-                var dodoId = eventBody.DodoId;
+                var dodoId = eventBody.DodoSourceId;
                 var nickName = eventBody.Member.NickName;
 
                 if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
                     var content = messageBodyText.Content.Replace(" ", "");
-                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var defaultReply = $"<@!{eventBody.DodoSourceId}>";
                     var reply = defaultReply;
 
                     #region 时效身份组
 
-                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
+                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandSourceId}.txt";
 
                     if (Regex.IsMatch(content, _appSetting.WeekCard.Command) || Regex.IsMatch(content, _appSetting.MonthCard.Command))
                     {
@@ -106,23 +106,23 @@ namespace DoDo.Open.AgingRole
                             {
                                 var otherMemberInfo = await _openApiService.GetMemberInfoAsync(new GetMemberInfoInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = otherDoDoId
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = otherDoDoId
                                 });
 
                                 if (otherMemberInfo != null)
                                 {
                                     var roleList = await _openApiService.GetRoleListAsync(new GetRoleListInput
                                     {
-                                        IslandId = eventBody.IslandId
+                                        IslandSourceId = eventBody.IslandSourceId
                                     });
                                     var role = roleList.FirstOrDefault(x => x.RoleName == roleName);
                                     if (role != null)
                                     {
                                         var result = await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
                                         {
-                                            IslandId = eventBody.IslandId,
-                                            DodoId = otherDoDoId,
+                                            IslandSourceId = eventBody.IslandSourceId,
+                                            DodoSourceId = otherDoDoId,
                                             RoleId = role.RoleId
                                         });
 
@@ -194,8 +194,8 @@ namespace DoDo.Open.AgingRole
                         {
                             var memberInfo = await _openApiService.GetMemberInfoAsync(new GetMemberInfoInput
                             {
-                                IslandId = eventBody.IslandId,
-                                DodoId = targetDoDoId
+                                IslandSourceId = eventBody.IslandSourceId,
+                                DodoSourceId = targetDoDoId
                             });
                             nickName = memberInfo?.NickName;
                         }
@@ -208,8 +208,8 @@ namespace DoDo.Open.AgingRole
                         {
                             var memberRoleList = await _openApiService.GetMemberRoleListAsync(new GetMemberRoleListInput
                             {
-                                IslandId = eventBody.IslandId,
-                                DodoId = targetDoDoId
+                                IslandSourceId = eventBody.IslandSourceId,
+                                DodoSourceId = targetDoDoId
                             });
 
                             var list = DataHelper.ReadKeys(dataPath, targetDoDoId);

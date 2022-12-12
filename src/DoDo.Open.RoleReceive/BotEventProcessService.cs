@@ -54,7 +54,7 @@ namespace DoDo.Open.RoleReceive
             {
                 var roleList = _openApiService.GetRoleList(new GetRoleListInput
                 {
-                    IslandId = _appSetting.IslandId
+                    IslandSourceId = _appSetting.IslandId
                 }, true);
 
                 var content = $"{_appSetting.Message}\n\n";
@@ -153,8 +153,8 @@ namespace DoDo.Open.RoleReceive
                             {
                                 await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     RoleId = item.RoleId
                                 }, true);
                             }
@@ -162,8 +162,8 @@ namespace DoDo.Open.RoleReceive
                             {
                                 await _openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     RoleId = item.RoleId
                                 }, true);
                             }
@@ -175,7 +175,7 @@ namespace DoDo.Open.RoleReceive
                             {
                                 MessageId = _appSetting.MessageId,
                                 Emoji = eventBody.ReactionEmoji,
-                                DodoId = eventBody.DodoId
+                                DodoSourceId = eventBody.DodoSourceId
                             });
                         }
                     }

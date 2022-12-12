@@ -64,10 +64,10 @@ namespace DoDo.Open.Solitaire
                 if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
                     var content = messageBodyText.Content.Replace(" ", "");
-                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var defaultReply = $"<@!{eventBody.DodoSourceId}>";
                     var reply = defaultReply;
 
-                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandId}.txt";
+                    var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.IslandSourceId}.txt";
 
                     #region 接龙
 
@@ -77,7 +77,7 @@ namespace DoDo.Open.Solitaire
                         var solitaireContent = matchResult.Groups[1].Value;
                         if (!string.IsNullOrWhiteSpace(solitaireContent))
                         {
-                            var solitaireReply = $"<@!{eventBody.DodoId}>";
+                            var solitaireReply = $"<@!{eventBody.DodoSourceId}>";
                             var showReply = $"1. {solitaireReply}";
                             var output = await _openApiService.SetChannelMessageSendAsync(new SetChannelMessageSendInput<MessageBodyText>()
                             {
@@ -90,8 +90,8 @@ namespace DoDo.Open.Solitaire
 
                             if (!string.IsNullOrWhiteSpace(output.MessageId))
                             {
-                                DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", eventBody.IslandId);
-                                DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoId);
+                                DataHelper.WriteValue(dataPath, output.MessageId, "IslandId", eventBody.IslandSourceId);
+                                DataHelper.WriteValue(dataPath, output.MessageId, "DoDoId", eventBody.DodoSourceId);
                                 DataHelper.WriteValue(dataPath, output.MessageId, "Content", solitaireContent.Replace("\\n", "\n"));
                                 DataHelper.WriteValue(dataPath, output.MessageId, "Reply", solitaireReply.Replace("\\n", "\n"));
                                 DataHelper.WriteValue(dataPath, output.MessageId, "CreateTime", DateTime.Now);
@@ -120,14 +120,14 @@ namespace DoDo.Open.Solitaire
                             {
                                 if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
                                 {
-                                    if (!oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
+                                    if (!oldEntityReply.Contains($"<@!{eventBody.DodoSourceId}>"))
                                     {
                                         solitaireReply = solitaireReply.Replace("\n", "");
 
                                         if (!string.IsNullOrWhiteSpace(oldEntityReply))
                                         {
                                             var list = oldEntityReply.Split("\n").ToList();
-                                            list.Add($"<@!{eventBody.DodoId}> {solitaireReply}");
+                                            list.Add($"<@!{eventBody.DodoSourceId}> {solitaireReply}");
 
                                             oldEntityReply = string.Join("\n", list);
 
@@ -210,11 +210,11 @@ namespace DoDo.Open.Solitaire
                             {
                                 if (oldEntityCreateTime.AddHours(12) > DateTime.Now)
                                 {
-                                    if (oldEntityReply.Contains($"<@!{eventBody.DodoId}>"))
+                                    if (oldEntityReply.Contains($"<@!{eventBody.DodoSourceId}>"))
                                     {
                                         var list = oldEntityReply.Split("\n")
                                             .ToList()
-                                            .Where(x => !x.StartsWith($"<@!{eventBody.DodoId}>"))
+                                            .Where(x => !x.StartsWith($"<@!{eventBody.DodoSourceId}>"))
                                             .ToList();
 
                                         oldEntityReply = string.Join("\n", list);

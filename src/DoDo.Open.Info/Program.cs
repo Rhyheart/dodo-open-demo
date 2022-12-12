@@ -33,21 +33,21 @@ try
 
     openApiService.GetIslandInfo(new GetIslandInfoInput
     {
-        IslandId = appSetting.IslandId
+        IslandSourceId = appSetting.IslandId
     }, true);
 
     Console.WriteLine("\n[ 获取频道列表 ]\n");
 
     openApiService.GetChannelList(new GetChannelListInput
     {
-        IslandId = appSetting.IslandId
+        IslandSourceId = appSetting.IslandId
     }, true);
 
     Console.WriteLine("\n[ 获取身份组列表 ]\n");
 
     openApiService.GetRoleList(new GetRoleListInput
     {
-        IslandId = appSetting.IslandId
+        IslandSourceId = appSetting.IslandId
     }, true);
 
     Console.ReadKey();

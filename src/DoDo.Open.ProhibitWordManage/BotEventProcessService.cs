@@ -55,7 +55,7 @@ namespace DoDo.Open.ProhibitWordManage
                 if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
                     var content = messageBodyText.Content.Replace(" ", "");
-                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var defaultReply = $"<@!{eventBody.DodoSourceId}>";
                     var reply = defaultReply;
 
                     #region 违禁词管理
@@ -96,8 +96,8 @@ namespace DoDo.Open.ProhibitWordManage
                             {
                                 await _openApiService.SetMemberMuteAddAsync(new SetMemberMuteAddInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     Duration = matchRule.MuteDuration * 60,
                                     Reason = "触发违禁词"
                                 }, true);

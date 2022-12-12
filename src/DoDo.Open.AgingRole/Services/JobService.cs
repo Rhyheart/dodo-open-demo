@@ -28,8 +28,8 @@ namespace DoDo.Open.AgingRole.Services
                             {
                                 await openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
                                 {
-                                    IslandId = islandId,
-                                    DodoId = dodoId,
+                                    IslandSourceId = islandId,
+                                    DodoSourceId = dodoId,
                                     RoleId = roleId
                                 });
                                 DataHelper.DeleteKey(filePath, dodoId, roleId);

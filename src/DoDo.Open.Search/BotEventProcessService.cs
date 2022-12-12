@@ -55,7 +55,7 @@ namespace DoDo.Open.Search
                 if (eventBody.MessageBody is MessageBodyText messageBodyText)
                 {
                     var content = messageBodyText.Content.Replace(" ", "");
-                    var defaultReply = $"<@!{eventBody.DodoId}>";
+                    var defaultReply = $"<@!{eventBody.DodoSourceId}>";
                     var reply = defaultReply;
 
                     #region 检索
@@ -65,7 +65,7 @@ namespace DoDo.Open.Search
                     {
                         var matchResult = Regex.Match(content, $"{rule.Command}(.*)");
                         reply = rule.Reply
-                            .Replace("{DoDoId}", eventBody.DodoId)
+                            .Replace("{DoDoId}", eventBody.DodoSourceId)
                             .Replace("{KeyWord}", UrlEncoder.Default.Encode(matchResult.Groups[1].Value));
                     }
 

@@ -58,7 +58,7 @@ namespace DoDo.Open.NftRole
                 {
                     var roleList = await _openApiService.GetRoleListAsync(new GetRoleListInput
                     {
-                        IslandId = _appSetting.IslandId
+                        IslandSourceId = _appSetting.IslandId
                     }, true);
 
                     var content = $"{_appSetting.Message}\n\n";
@@ -174,8 +174,8 @@ namespace DoDo.Open.NftRole
                             {
                                 var result = await _openApiService.GetMemberNftStatusAsync(new GetMemberNftStatusInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     Platform = item.Platform,
                                     Issuer = item.Issuer,
                                     Series = item.Series
@@ -204,8 +204,8 @@ namespace DoDo.Open.NftRole
 
                                 await _openApiService.SetRoleMemberAddAsync(new SetRoleMemberAddInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     RoleId = item.RoleId
                                 }, true);
                             }
@@ -213,8 +213,8 @@ namespace DoDo.Open.NftRole
                             {
                                 await _openApiService.SetRoleMemberRemoveAsync(new SetRoleMemberRemoveInput
                                 {
-                                    IslandId = eventBody.IslandId,
-                                    DodoId = eventBody.DodoId,
+                                    IslandSourceId = eventBody.IslandSourceId,
+                                    DodoSourceId = eventBody.DodoSourceId,
                                     RoleId = item.RoleId
                                 }, true);
                             }
@@ -226,13 +226,13 @@ namespace DoDo.Open.NftRole
                             {
                                 MessageId = _appSetting.MessageId,
                                 Emoji = eventBody.ReactionEmoji,
-                                DodoId = eventBody.DodoId
+                                DodoSourceId = eventBody.DodoSourceId
                             });
 
                             //私聊告知用户不满足规则要求的具体原因
                             await _openApiService.SetPersonalMessageSendAsync(new SetPersonalMessageSendInput<MessageBodyText>
                             {
-                                DodoId = eventBody.DodoId,
+                                DodoSourceId = eventBody.DodoSourceId,
                                 MessageBody = new MessageBodyText
                                 {
                                     Content = e.Message.Replace("当前用户", "您")

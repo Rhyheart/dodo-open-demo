@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Text.Unicode;
 using DoDo.Open.Sdk.Models;
+using DoDo.Open.Sdk.Models.Bots;
 using DoDo.Open.Sdk.Models.Channels;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Messages;
@@ -16,6 +18,7 @@ namespace DoDo.Open.ChatGPT
         private readonly OpenApiService _openApiService;
         private readonly OpenApiOptions _openApiOptions;
         private readonly AppSetting _appSetting;
+        private string? botId;
 
         public BotEventProcessService(OpenApiService openApiService, AppSetting appSetting)
         {
@@ -70,6 +73,29 @@ namespace DoDo.Open.ChatGPT
                     var reply = "";
 
                     #region ChatGPT
+
+                    if (string.IsNullOrWhiteSpace(botId))
+                    {
+                        botId = (await _openApiService.GetBotInfoAsync(new GetBotInfoInput()))?.DodoSourceId;
+                    }
+
+                    if (Regex.IsMatch(content, @".*(<@!\d+>).*"))
+                    {
+                        content = Regex.Replace(content, @"<@!\d+>", "");
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    /*if (content.Contains($"<@!{botId}>"))
+                    {
+                        content = content.Replace($"<@!{botId}>", "");
+                    }
+                    else
+                    {
+                        return;
+                    }*/
 
                     var dataPath = $"{Environment.CurrentDirectory}\\data\\{eventBody.DodoSourceId}.txt";
 

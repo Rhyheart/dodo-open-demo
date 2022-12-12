@@ -28,7 +28,7 @@
         /// <summary>
         /// 最大Token数
         /// </summary>
-        public string MaxTokens { get; set; }
+        public long MaxTokens { get; set; }
 
         /// <summary>
         /// 语言模型

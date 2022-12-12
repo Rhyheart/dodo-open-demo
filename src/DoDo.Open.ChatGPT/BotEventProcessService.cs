@@ -177,7 +177,7 @@ namespace DoDo.Open.ChatGPT
                     }
                     catch (Exception e)
                     {
-                        // ignored
+                        Exception($"ChatGPT-Response:{e.Message}");
                     }
 
                     if (!string.IsNullOrWhiteSpace(setReply))

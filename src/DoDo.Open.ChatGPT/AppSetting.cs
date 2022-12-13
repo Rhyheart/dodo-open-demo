@@ -15,10 +15,10 @@
         /// <summary>
         /// ChatGPT配置
         /// </summary>
-        public ChatGPTConfig ChatGPTConfig { get; set; }
+        public ChatGPT ChatGPT { get; set; }
     }
 
-    public class ChatGPTConfig
+    public class ChatGPT
     {
         /// <summary>
         /// Token

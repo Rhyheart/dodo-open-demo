@@ -148,7 +148,7 @@ namespace DoDo.Open.ChatGPT
 
                     var request = new RestRequest("https://api.openai.com/v1/completions");
 
-                    request.AddHeader("Authorization", $"Bearer {_appSetting.ChatGPTConfig.Token}");
+                    request.AddHeader("Authorization", $"Bearer {_appSetting.ChatGPT.Token}");
 
                     var jsonSerializerOptions = new JsonSerializerOptions
                     {
@@ -158,7 +158,7 @@ namespace DoDo.Open.ChatGPT
 
                     var json = new
                     {
-                        model = _appSetting.ChatGPTConfig.Model,
+                        model = _appSetting.ChatGPT.Model,
                         prompt = $"{messageBuilder}",
                         temperature = 0.9,
                         max_tokens = maxTokens,

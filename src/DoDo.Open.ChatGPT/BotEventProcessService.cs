@@ -108,6 +108,11 @@ namespace DoDo.Open.ChatGPT
 
                     var setKeyWord = content;
 
+                    if (setKeyWord.Length > 200)
+                    {
+                        setKeyWord = setKeyWord.Substring(0, 200);
+                    }
+
                     var maxTokens = 1500;
 
                     var messageBuilder = new StringBuilder();
@@ -120,9 +125,9 @@ namespace DoDo.Open.ChatGPT
                         var getKeyWord = DataHelper.ReadValue<string>(dataPath, section, "KeyWord");
                         var getReply = DataHelper.ReadValue<string>(dataPath, section, "Reply").Replace("\\n", "\n");
 
-                        if (getReply.Length > 200)
+                        if (getReply.Length > 100)
                         {
-                            getReply = getReply.Substring(0, 200);
+                            getReply = getReply.Substring(0, 100);
                         }
 
                         var tempMessage = $"{eventBody.DodoSourceId}:{getKeyWord}\nAi:{getReply}\n";
@@ -189,7 +194,7 @@ namespace DoDo.Open.ChatGPT
                     {
                         reply += setReply;
 
-                        var setSection = DateTime.Now.ToString("yyyyMMddhhmmss");
+                        var setSection = DateTime.Now.ToString("yyyyMMddHHmmss");
 
                         DataHelper.WriteValue(dataPath, setSection, "KeyWord", setKeyWord);
                         DataHelper.WriteValue(dataPath, setSection, "Reply", setReply.Replace("\n", ""));

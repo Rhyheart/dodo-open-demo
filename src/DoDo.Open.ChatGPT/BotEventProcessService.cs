@@ -112,7 +112,7 @@ namespace DoDo.Open.ChatGPT
 
                     var messageBuilder = new StringBuilder();
 
-                    messageBuilder.Append($"\n{eventBody.DodoSourceId}:{setKeyWord}");
+                    messageBuilder.Insert(0, $"{eventBody.DodoSourceId}:{setKeyWord}");
 
                     for (var i = 0; i < sectionList.Count; i++)
                     {
@@ -120,14 +120,14 @@ namespace DoDo.Open.ChatGPT
                         var getKeyWord = DataHelper.ReadValue<string>(dataPath, section, "KeyWord");
                         var getReply = DataHelper.ReadValue<string>(dataPath, section, "Reply").Replace("\\n", "\n");
 
-                        if (getReply.Length > 500)
+                        if (getReply.Length > 200)
                         {
-                            getReply = getReply.Substring(0, 500);
+                            getReply = getReply.Substring(0, 200);
                         }
 
-                        var tempMessage = $"\n{eventBody.DodoSourceId}:{getKeyWord}\nAi:{getReply}";
+                        var tempMessage = $"{eventBody.DodoSourceId}:{getKeyWord}\nAi:{getReply}\n";
 
-                        if (messageBuilder.Length + tempMessage.Length < 4000 - maxTokens)
+                        if (Encoding.Default.GetByteCount(messageBuilder + tempMessage) < 4000 - maxTokens)
                         {
                             messageBuilder.Insert(0, tempMessage);
                         }
@@ -174,7 +174,11 @@ namespace DoDo.Open.ChatGPT
 
                         _openApiOptions.Log?.Invoke($"ChatGPT-Response: {response.Content}");
 
-                        setReply = response.Data.Choices[0].Text.Replace("Ai:", "");
+                        setReply = response.Data.Choices[0].Text;
+
+                        setReply = setReply.Replace("Ai:", "");
+                        setReply = setReply.TrimStart('\r', '\n');
+                        setReply = setReply.TrimEnd('\r', '\n');
                     }
                     catch (Exception e)
                     {

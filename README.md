@@ -372,7 +372,7 @@
 
 #### 项目地址
 
-[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.ChatGPT)
+[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT/tree/main/src/DoDo.Open.ChatGPT)
 
 #### 项目介绍
 

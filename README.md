@@ -100,19 +100,19 @@
 </details>
 
 <details>
-<summary>三、NFT身份组机器人</summary>
+<summary>十二、Chat GPT 机器人</summary>
 
 #### 项目地址
-  
-[DoDo.Open.NftRole](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.NftRole)
+
+[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT/tree/main/src/DoDo.Open.ChatGPT)
 
 #### 项目介绍
 
-本机器人项目用于实现NFT身份组领取功能，用户通过对NFT身份组领取消息添加对应表情反应，从而获取对应身份组
+本机器人项目用于实现ChatGPT智能AI交互功能
 
 #### 使用步骤
 
-0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=3)
+0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
 
 1、创建机器人
 
@@ -120,11 +120,11 @@
 
 3、下载解压执行程序
 
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.NftRole/appsettings.json)，对于`ChannelId`和`RoleId`，请从`基础信息机器人`中获取
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-chatGPT/blob/main/src/DoDo.Open.ChatGPT/appsettings.json)
 
 5、启动程序
 
-6、前往测试频道领取对应身份组
+6、测试群内艾特机器人发送`你是谁`指令即可
 
 </details>
 
@@ -364,34 +364,5 @@
 5、启动程序
 
 6、测试群内发送`发起抽奖`指令即可
-
-</details>
-
-<details>
-<summary>十二、Chat GPT 机器人</summary>
-
-#### 项目地址
-
-[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT/tree/main/src/DoDo.Open.ChatGPT)
-
-#### 项目介绍
-
-本机器人项目用于实现ChatGPT智能AI交互功能
-
-#### 使用步骤
-
-0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
-
-1、创建机器人
-
-2、将机器人拉入测试群
-
-3、下载解压执行程序
-
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-chatGPT/blob/main/src/DoDo.Open.ChatGPT/appsettings.json)
-
-5、启动程序
-
-6、测试群内艾特机器人发送`你是谁`指令即可
 
 </details>

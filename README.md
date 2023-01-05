@@ -372,7 +372,7 @@
 
 #### 项目地址
 
-[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-demo/tree/main/src/DoDo.Open.ChatGPT)
+[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT/tree/main/src/DoDo.Open.ChatGPT)
 
 #### 项目介绍
 
@@ -388,7 +388,7 @@
 
 3、下载解压执行程序
 
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-demo/blob/main/src/DoDo.Open.ChatGPT/appsettings.json)
+4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-chatGPT/blob/main/src/DoDo.Open.ChatGPT/appsettings.json)
 
 5、启动程序
 

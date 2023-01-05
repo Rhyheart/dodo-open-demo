@@ -104,27 +104,11 @@
 
 #### 项目地址
 
-[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT/tree/main/src/DoDo.Open.ChatGPT)
+[DoDo.Open.ChatGPT](https://github.com/Rhyheart/dodo-open-chatGPT)
 
 #### 项目介绍
 
 本机器人项目用于实现ChatGPT智能AI交互功能
-
-#### 使用步骤
-
-0、[视频教程](https://www.bilibili.com/video/BV1wB4y1x7qH?p=6)
-
-1、创建机器人
-
-2、将机器人拉入测试群
-
-3、下载解压执行程序
-
-4、维护 [配置文件](https://github.com/Rhyheart/dodo-open-chatGPT/blob/main/src/DoDo.Open.ChatGPT/appsettings.json)
-
-5、启动程序
-
-6、测试群内艾特机器人发送`你是谁`指令即可
 
 </details>
 

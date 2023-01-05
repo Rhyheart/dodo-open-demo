@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using DoDo.Open.Sdk.Models;
-using DoDo.Open.Sdk.Models.Channels;
+using DoDo.Open.Sdk.Models.ChannelMessages;
 using DoDo.Open.Sdk.Models.Events;
 using DoDo.Open.Sdk.Models.Members;
 using DoDo.Open.Sdk.Models.Messages;

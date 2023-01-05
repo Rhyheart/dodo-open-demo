@@ -1,4 +1,4 @@
-﻿using DoDo.Open.Sdk.Models.Channels;
+﻿using DoDo.Open.Sdk.Models.ChannelMessages;
 using DoDo.Open.Sdk.Models.Messages;
 using Quartz;
 
